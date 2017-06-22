@@ -4,3 +4,4 @@ db.sqlite3
 gadget/migrations/
 rockstar/migrations/
 media/
+music/migrations/

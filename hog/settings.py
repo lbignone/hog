@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'gadget.apps.GadgetConfig',
-    # 'music.apps.MusicConfig',
+    'music.apps.MusicConfig',
     'rockstar.apps.RockstarConfig',
     'django.contrib.admin',
     'django.contrib.auth',
