@@ -103,7 +103,7 @@ def save_region_point_file(region, pos):
 
     fname = region_filename(region, None)
 
-    np.savetxt(fname, pos, fmt='-12.4f')
+    np.savetxt(fname, pos, fmt='%-12.4f')
 
     return fname
 

@@ -154,13 +154,13 @@ def get_region_in_radius(snapshot, centre, radius, n_jobs=1):
 
     pos = snapshot.read_block("pos", "halo")
 
-    radius = radius.to(simulation.unit_lenght)
-    centre = centre.to(simulation.unit_lenght)
+    radius = radius.to(simulation.unit_length)
+    centre = centre.to(simulation.unit_length)
 
+    first = True
     for p in pos:
         tree = cKDTree(p.values, boxsize=simulation.boxlength)
 
-        first = True
         ind = tree.query_ball_point(centre.value, radius.value, n_jobs=n_jobs)
         if first:
             ids = p.iloc[ind].index

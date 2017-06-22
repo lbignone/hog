@@ -3,3 +3,4 @@ core/migrations/
 db.sqlite3
 gadget/migrations/
 rockstar/migrations/
+media/
