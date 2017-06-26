@@ -63,6 +63,8 @@ class GadgetSnapshotAdmin(admin.ModelAdmin):
         'n_bndry',
     )
 
+    list_filter = ('simulation', )
+
 
 admin.site.register(GadgetSimulation, GadgetSimulationAdmin)
 admin.site.register(GadgetSnapshot, GadgetSnapshotAdmin)

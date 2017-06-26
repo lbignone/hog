@@ -43,18 +43,18 @@ def get_lagrangian_volume(structure, radius):
     return pos
 
 
-def get_lagrangian_by_rtb(structure, r_tb):
+def get_lagrangian_by_rtb(structure, rtb):
     """
     Obtain the positions of the particles occupying the lagrangian volume
     corresponding to a spherical region center around a structure. The search
-    radius is r_tb times the structure radius.
+    radius is rtb times the structure radius.
 
     Parameters
     ----------
     structure : structure_like
         structure at the center of the spherical volume.
-    r_tb : float
-        the search radius is r_tb times the structure radius.
+    rtb : float
+        the search radius is rtb times the structure radius.
 
     Returns
     -------
@@ -63,7 +63,7 @@ def get_lagrangian_by_rtb(structure, r_tb):
 
     """
 
-    radius = structure.get_radius() * r_tb
+    radius = structure.get_radius() * rtb
 
     pos = get_lagrangian_volume(structure, radius)
 
@@ -108,7 +108,7 @@ def save_region_point_file(region, pos):
     return fname
 
 
-def create_ellipsoid_region(structure, r_tb):
+def create_ellipsoid_region(structure, rtb):
     """
     Create an ellipsoid region center around a structure
 
@@ -116,8 +116,8 @@ def create_ellipsoid_region(structure, r_tb):
     ----------
     structure : structure_like
         structure at the center of the spherical volume.
-    r_tb : float
-        the search radius is r_tb times the structure radius.
+    rtb : float
+        the search radius is rtb times the structure radius.
 
     Returns
     -------
@@ -126,18 +126,28 @@ def create_ellipsoid_region(structure, r_tb):
     """
     from core.models import EllipsoidRegion
 
-    pos = get_lagrangian_by_rtb(structure, r_tb)
-
     region = EllipsoidRegion()
+    region.structure = structure
+    region.rtb = rtb
+    set_region_point_file(region)
+
+    return region
+
+
+def set_region_point_file(region):
+    """
+    Set the region point file based on model data.
+    """
+    structure = region.structure
+    rtb = region.rtb
+    pos = get_lagrangian_by_rtb(structure, rtb)
+
     region.name = str(structure)
     region.snapshot = structure.catalogue.snapshot
     region.structure = structure
     region.save()
 
     fname = save_region_point_file(region, pos)
-
     region.region_point_file = fname
 
     region.save()
-
-    return region

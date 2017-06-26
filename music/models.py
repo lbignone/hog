@@ -1,10 +1,61 @@
 from django.db import models
 
-from core.models import Ic
+from gadget.models import GadgetIc
+from core.models import Ic, BoxRegion, EllipsoidRegion
 from polymorphic.models import PolymorphicModel
+from django.conf import settings
 
 
-class MusicIc(Ic):
+class MusicRegion(PolymorphicModel):
+    pass
+
+    def __str__(self):
+        return self.region.__str__()
+
+
+class MusicBoxRegion(MusicRegion):
+    region = models.ForeignKey(BoxRegion, on_delete=models.PROTECT,
+                               blank=False)
+
+    @property
+    def region_type(self):
+        return 'box'
+
+
+class MusicEllipsoidRegion(MusicRegion):
+
+    region = models.ForeignKey(EllipsoidRegion, on_delete=models.PROTECT,
+                               blank=False)
+
+    region_point_shift_help = """[optional] If the simulation from which the
+    coordinates in region_point_file have been determined was already a zoom
+    simulation, the coordinates in the IC file need to be shifted back to
+    their original position (the zoom region had been centered). Specify here
+    the shift that was applied in the centering of the zoom region, as has
+    been output by MUSIC in the line, e.g. - Domain will be shifted by (-12,
+    -12, -12) If you specify the shift, also the levelmin of that simulation
+    needs to be specified as below"""
+
+    region_point_shift = models.CharField(max_length=200, blank=True,
+                                          help_text=region_point_shift_help)
+
+    region_levelmin_help = """[optional, but req. if region_point_shift is
+    specified] The levelmin of the zoom-in simulation that has been run to
+    determine the points that determine the region"""
+
+    region_point_levelmin = models.CharField(max_length=200, blank=True,
+                                             help_text=region_levelmin_help)
+
+    @property
+    def region_type(self):
+        return 'ellipsoid'
+
+    @property
+    def region_point_file(self):
+        return self.region.get_point_filename()
+
+
+class MusicIc(models.Model):
 
     # executable = models.ForeignKey(Music_build, blank=True)
 
@@ -16,7 +67,7 @@ class MusicIc(Ic):
     zstart_help = 'The starting redshift for the simulation'
     zstart = models.FloatField(blank=False)
 
-    # region = models.ForeignKey("Region", on_delete=models.PROTECT)
+    region = models.ForeignKey(MusicRegion, on_delete=models.PROTECT)
 
     levelmin_help = """The level of the coarse grid which covers the full
     simulation box. The number specified is the 2-log of the number of grid
@@ -67,7 +118,7 @@ class MusicIc(Ic):
     if parameter is not present. This is mainly necessary to optimize for
     block based AMR"""
 
-    blocking_factor = models.IntegerField(blank=True,
+    blocking_factor = models.IntegerField(blank=True, null=True,
                                           help_text=blocking_factor_help)
 
     align_top_help = """ Require subgrids to be always aligned with the
@@ -223,8 +274,11 @@ class MusicIc(Ic):
     fft_fine = models.BooleanField(blank=False, default=False,
                                    help_text=fft_fine_help)
 
+    class Meta:
+        abstract = True
 
-class GadgetIc(MusicIc):
+
+class MusicGadgetIc(GadgetIc, MusicIc):
     gadget_lunit_choices = (
         ('Mpc', 'Mpc'),
         ('kpc', 'kpc'),
@@ -255,12 +309,12 @@ class GadgetIc(MusicIc):
                                     default='km/s',
                                     choices=gadget_vunit_choices)
 
-    gadget_num_files_help = """this will split the initial conditions file
-    into several files, necessary for very large particle numbers (> 2^31), or
-    for convenience reasons"""
+    # gadget_num_files_help = """this will split the initial conditions file
+    # into several files, necessary for very large particle numbers (> 2^31),
+    # or for convenience reasons"""
 
-    gadget_num_files = models.IntegerField(blank=False, default=1,
-                                           help_text=gadget_num_files_help)
+    # gadget_num_files = models.IntegerField(blank=False, default=1,
+    #                                        help_text=gadget_num_files_help)
 
     gadget_coarsetype_help = """Gadget particle type to be used for coarse
     particles (2,3 or 5), default is 5"""
@@ -277,9 +331,52 @@ class GadgetIc(MusicIc):
     gadget_longids = models.BooleanField(blank=False, default=False,
                                          help_text=gadget_longids_help)
 
+    @property
+    def output_format(self):
+        return 'gadget'
+
+    def output_list(self):
+        from music.utils import gadget_output_list
+        return gadget_output_list(self)
+
+    @property
+    def gadget_num_files(self):
+        return self.file_number
+
+    def get_path(self):
+        """
+        Get path to the folder corresponding to the region.
+
+        """
+        root = settings.MEDIA_ROOT
+        path = root + '/music/{id:d}_{name:s}/'
+        path = path.format(id=self.id, name=self.name)
+
+        return path
+
+    def get_config_filename(self):
+        """
+        Get full path to the region point file.
+
+        """
+        path = self.get_path()
+        fname = path + self.name + '.conf'
+
+        return fname
+
+    def get_ic_filename(self):
+        """
+        Get full path to the region point file.
+
+        """
+        path = self.get_path()
+        fname = path + self.filename
+
+        return fname
+
 
 class Seed(models.Model):
-    ic = models.ForeignKey('MusicIc', on_delete=models.CASCADE, blank=False)
+    ic = models.ForeignKey(Ic, on_delete=models.CASCADE, blank=False)
     level = models.IntegerField(blank=False)
     value = models.IntegerField(blank=False)
 
