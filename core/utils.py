@@ -141,6 +141,7 @@ def set_region_point_file(region):
     structure = region.structure
     rtb = region.rtb
     pos = get_lagrangian_by_rtb(structure, rtb)
+    region.N = len(pos)
 
     region.name = str(structure)
     region.snapshot = structure.catalogue.snapshot
@@ -151,3 +152,55 @@ def set_region_point_file(region):
     region.region_point_file = fname
 
     region.save()
+
+
+def compute_ellipsoid(region):
+
+        fname = region.get_point_filename()
+
+        from subprocess import check_output
+
+        cmd = ['ellipsoid', fname, ]
+
+        r = check_output(cmd)
+
+        r = r.splitlines()
+
+        A = [
+            [float(t) for t in (r[3].split('=')[1].split(','))],
+            [float(t) for t in (r[4].split('=')[1].split(','))],
+            [float(t) for t in (r[5].split('=')[1].split(','))]
+        ]
+        A = np.array(A)
+
+        region.A_arr = A
+
+        a, b, c = (np.linalg.eigvals(A))**(-0.5)
+
+        V = (4. / 3) * np.pi * a * b * c
+
+        structure = region.structure
+        rvir = structure.get_radius()
+        Vn = (4. / 3) * np.pi * rvir**3
+
+        simulation = structure.catalogue.snapshot.simulation
+        box_length = simulation.get_box_length()
+
+        V_norm = V * box_length**3 / Vn
+        V_norm = V_norm.decompose()
+
+        region.V_norm = V_norm
+
+        region.V = V
+        region.a = a
+        region.b = b
+        region.c = c
+
+        xc, yc, zc = [float(t) for t in (r[6].split('=')[1].split(','))]
+        region.xc = xc
+        region.yc = yc
+        region.zc = zc
+
+        region.save()
+
+        return r
