@@ -3,48 +3,191 @@
 	{
 		"selected_items":
 		[
+			[
+				"bo",
+				"box_size\tstatement"
+			],
+			[
+				"par",
+				"particle_type\tparam"
+			],
+			[
+				"off",
+				"offsets"
+			],
+			[
+				"bl",
+				"block_type"
+			],
+			[
+				"ind",
+				"index_per_file\tstatement"
+			],
+			[
+				"file",
+				"file_number\tstatement"
+			],
+			[
+				"rea",
+				"read_block\tfunction"
+			],
+			[
+				"ite",
+				"iter_files"
+			],
+			[
+				"full",
+				"full_block"
+			],
+			[
+				"blo",
+				"block_iter\tstatement"
+			],
+			[
+				"all",
+				"all_files\tparam"
+			],
+			[
+				"sim",
+				"simulation"
+			],
+			[
+				"s",
+				"snapshot"
+			],
+			[
+				"box",
+				"get_box_length"
+			],
+			[
+				"che",
+				"check_output\tfunction"
+			],
+			[
+				"out",
+				"output\tstatement"
+			],
+			[
+				"Ell",
+				"EllipsoidRegionAdmin\tclass"
+			],
+			[
+				"gad",
+				"gadget_output_list\tfunction"
+			],
+			[
+				"output_list",
+				"output_list"
+			],
+			[
+				"reg",
+				"region_point_file"
+			],
+			[
+				"SE",
+				"SET_NULL\tfunction"
+			],
+			[
+				"Mus",
+				"MusicEllipsoidRegion\tclass"
+			],
+			[
+				"For",
+				"ForeignKey"
+			],
+			[
+				"fil",
+				"file_number\tstatement"
+			],
+			[
+				"he",
+				"help_text\tparam"
+			],
+			[
+				"fie",
+				"fieldsets\tstatement"
+			],
+			[
+				"uni",
+				"unit_length\tfunction"
+			],
+			[
+				"Ga",
+				"GadgetIc\tclass"
+			],
+			[
+				"Gad",
+				"GadgetIc\tclass"
+			],
+			[
+				"file_num",
+				"get_file_number"
+			],
+			[
+				"snap",
+				"snapshot_file_base\tstatement"
+			],
+			[
+				"imp",
+				"import_from_location\tfunction"
+			],
+			[
+				"load_snapsh",
+				"load_snapshots\tfunction"
+			],
+			[
+				"Roc",
+				"RockstarCatalogue"
+			],
+			[
+				"get_",
+				"get_pos_from_ids\tfunction"
+			],
+			[
+				"get",
+				"get_region_in_radius\tfunction"
+			],
+			[
+				"mass",
+				"mass_in_g\tstatement"
+			],
+			[
+				"dir",
+				"dirname\tstatement"
+			],
+			[
+				"S",
+				"StructureRegion\tclass"
+			],
+			[
+				"G",
+				"GadgetIc\tclass"
+			],
+			[
+				"prin",
+				"printTotals"
+			],
+			[
+				"pri",
+				"printTotals\tfunction"
+			],
+			[
+				"R",
+				"R200"
+			],
+			[
+				"da",
+				"create_dataset\tfunction"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "core/models.py",
+			"file": "gadget/pygadget2.py",
 			"settings":
 			{
-				"buffer_size": 3371,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "core/utils.py",
-			"settings":
-			{
-				"buffer_size": 3173,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rockstar/utils.py",
-			"settings":
-			{
-				"buffer_size": 566,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "gadget/utils.py",
-			"settings":
-			{
-				"buffer_size": 3964,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "build_db.py",
-			"settings":
-			{
-				"buffer_size": 697,
+				"buffer_size": 42992,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -57,20 +200,68 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 92.0,
-		"last_filter": "install",
+		"height": 784.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
+				"status",
+				"Git: Status"
+			],
+			[
+				"start",
+				"Git-flow: Feature Start"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"sta",
+				"Git: Status"
+			],
+			[
+				"white",
+				"Whitespace: Remove Trailing Whitespace"
+			],
+			[
 				"install",
 				"Package Control: Install Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"stat",
+				"Git: Status"
+			],
+			[
+				"check",
+				"Git: Checkout"
+			],
+			[
+				"pdfla",
+				"Build With: LaTeX - PdfLaTeX"
+			],
+			[
+				"latex",
+				"LaTeXTools: View PDF"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"ipyt",
+				"Restart IPython Notebook Kernel"
 			]
 		],
-		"width": 485.0
+		"width": 898.0
 	},
 	"console":
 	{
-		"height": 139.0,
+		"height": 246.0,
 		"history":
 		[
 			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
@@ -88,17 +279,78 @@
 	"expanded_folders":
 	[
 		"/home/lbignone/Development/hog",
-		"/home/lbignone/Development/hog/core"
+		"/home/lbignone/Development/hog/core",
+		"/home/lbignone/Development/hog/hog",
+		"/home/lbignone/Development/hog/rockstar"
 	],
 	"file_history":
 	[
-		"/home/lbignone/Development/hog/rockstar/utils.pyc",
-		"/home/lbignone/Publications/mergers_mnras/draft_morphology.tex",
-		"/var/tmp/kdecache-lbignone/krun/9925_0_draft_morphology.tex"
+		"/run/media/lbignone/Seagate Expansion Drive/lbignone/wmmw/analysis/select_halos.py",
+		"/run/media/lbignone/Seagate Expansion Drive/lbignone/wmmw/analysis/halo_select.py",
+		"/run/media/lbignone/Seagate Expansion Drive/lbignone/wmmw/analysis/candidates.txt",
+		"/home/lbignone/Development/hog/rockstar/models.py",
+		"/home/lbignone/Development/hog/core/utils.py",
+		"/home/lbignone/Development/hog/core/admin.py",
+		"/home/lbignone/Development/hog/core/models.py",
+		"/home/lbignone/Downloads/README.md",
+		"/home/lbignone/Development/hog/rockstar/admin.py",
+		"/home/lbignone/Downloads/Lightscreen-2.4/README.md",
+		"/home/lbignone/Development/hog/core/vanderval14_late.txt",
+		"/run/media/lbignone/Seagate Expansion Drive/lbignone/wmmw/analysis/elegidos.txt",
+		"/home/lbignone/Development/hog/gadget/models.py",
+		"/home/lbignone/Development/hog/gadget/admin.py",
+		"/home/lbignone/Desktop/lightscreen.desktop",
+		"/home/lbignone/Development/hog/media/music/2_test/test.conf",
+		"/home/lbignone/Development/hog/music/utils.py",
+		"/home/lbignone/Development/hog/music/admin.py",
+		"/home/lbignone/Development/hog/music/models.py",
+		"/home/lbignone/Development/hog/hog.sublime-workspace",
+		"/home/lbignone/Development/hog/rockstar/utils.py",
+		"/home/lbignone/Development/hog/core/views.py",
+		"/home/lbignone/Development/hog/hog/settings.py",
+		"/home/lbignone/Development/hog/hog/urls.py",
+		"/home/lbignone/Development/hog/core/apps.py",
+		"/home/lbignone/Development/hog/core/tests.py",
+		"/home/lbignone/Development/hog/core/__init__.py",
+		"/home/lbignone/ics_33306_level12_baryons_1MpcBox_Ellipsoid_degraded.conf",
+		"/home/lbignone/Development/hog/gadget/utils.py",
+		"/home/lbignone/Development/hog/build_db.py",
+		"/home/lbignone/Development/hog/hog.sublime-project",
+		"/home/lbignone/Results/LGRB_sizes/blanchard16_redshift.txt",
+		"/home/lbignone/Results/LGRB_sizes/fruchter06.txt",
+		"/home/lbignone/Results/LGRB_sizes/blanchard16_t3.txt",
+		"/home/lbignone/Results/LGRB_sizes/bloom02_t2.txt",
+		"/home/lbignone/Results/LGRB_sizes/blanchard16_t2.txt",
+		"/home/lbignone/Results/LGRB_sizes/blanchard16_t1.txt",
+		"/home/lbignone/Results/LGRB_sizes/bloom02.py",
+		"/home/lbignone/Results/LGRB_sizes/lyman17_t1.txt",
+		"/home/lbignone/Development/hog/.gitignore",
+		"/home/lbignone/Results/LGRB_sizes/bloom02_t1.txt",
+		"/home/lbignone/Results/LGRB_sizes/lyman17.py",
+		"/home/lbignone/Results/LGRB_sizes/lyman17_tA2.txt",
+		"/home/lbignone/Results/LGRB_sizes/lyman17_tA1.txt",
+		"/home/lbignone/Results/LGRB_sizes/conselice05.txt",
+		"/home/lbignone/Results/LGRB_sizes/kelly14_t2.txt",
+		"/home/lbignone/Results/LGRB_sizes/kelly14_t3.txt",
+		"/home/lbignone/bin/iafe",
+		"/home/lbignone/Results/LGRB_sizes/lyman17_tabA2.html",
+		"/home/lbignone/Development/pysftp/pysftp.py",
+		"/home/lbignone/Development/hog/gadget/pygadget.py",
+		"/home/lbignone/Publications/paperii/paperII.tex",
+		"/home/lbignone/Publications/paperii/paperII.bib",
+		"/home/lbignone/Results/fr/virial.py",
+		"/home/lbignone/Results/fr/nn.py",
+		"/home/lbignone/Results/fr/compute_virial.py",
+		"/home/lbignone/Results/fr/conpute_virial.py",
+		"/home/lbignone/CV/CV_Bignone_En.tex",
+		"/home/lbignone/Publications/thesis/Chapters/HostGalaxies.tex",
+		"/home/lbignone/Publications/thesis/thesis.tex",
+		"/home/lbignone/Publications/thesis/Chapters/LGRBPopulationSynthesis.tex",
+		"/home/lbignone/Publications/thesis/Chapters/HostMorphologies.tex"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 61.0
 	},
 	"find_in_files":
 	{
@@ -112,12 +364,133 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"det_pos",
+			"select_ids_in_radius",
+			"read_block_from_id_offsets",
+			"values",
+			"radius",
+			"p_type",
+			"filter_by_ids",
+			"compute_ids_offset",
+			"tuple",
+			"compute_ids_offset",
+			"wraps",
+			"compute_ids_offset",
+			"raise",
+			"filter_bloc_by_ids",
+			"read_block_iter",
+			"filter_bloc_by_ids",
+			"read_block",
+			"read_block_iter",
+			"read_block",
+			"read_block_by_group",
+			"block_by",
+			"read_block_iter",
+			"read_block",
+			"offset",
+			"offsets",
+			"read_block",
+			"read_blo",
+			"read_block_by_subhalo",
+			"filter_bloc_by_ids",
+			"filter",
+			"filter_block_by_ids",
+			"filter_by_ids",
+			"filter_bloc_by_ids",
+			"read_block",
+			"read_block_by_subhalo",
+			"sub_ids",
+			"filter_by_ids",
+			"iter_files",
+			"files_iter",
+			"inter_files",
+			"read_block_by_group",
+			"read_block",
+			"easy",
+			"filename",
+			"r_tb",
+			"makedirs",
+			"get_point_filename",
+			"filena",
+			"region",
+			"filename",
+			"True",
+			"name",
+			"output",
+			"-\t",
+			"$",
+			"}$",
+			"\\times {10}^{",
+			" ...",
+			"<",
+			"...",
+			"F160W",
+			"...",
+			"...\n",
+			"\\ldots",
+			"\\kern.1666em",
+			"\\ldots",
+			"II n",
+			"IIn",
+			"I pec",
+			"|",
+			"60614",
+			"$$",
+			"</span>",
+			"<span class=\"inline-formula no-formula-id\">",
+			"9.18",
+			"<",
+			"\"\"\"\n",
+			"boxlength",
+			"get_box_length",
+			"length",
 			"lenght",
-			"unit_",
+			"read_bl",
+			"id",
+			"fname",
+			"get_fname",
+			"file_number",
+			"unit",
+			"n_jo",
+			"box",
+			"region_directory_path",
+			"key",
+			"easy",
+			"Gamma",
+			"universe",
+			"hosting a",
+			"osting a LGR",
+			"a LGRB",
 			"\\rev",
-			"for major mergers as ",
-			"recover"
+			"\\v",
+			"\\rev",
+			"rev",
+			"509",
+			"436",
+			"581",
+			"405",
+			"367",
+			"348",
+			"417",
+			"265",
+			"442",
+			"617",
+			"377",
+			"565",
+			"greiner",
+			"genel",
+			"fruchter",
+			"davis",
+			"campisi",
+			"asplund",
+			"ubatic",
+			"T. E. Tecce",
+			"A. E. Piatti",
+			"M. C. Artale",
+			"P. A. Tissera",
+			"L. J. Pelliza",
+			"L.A. Bignone",
+			"Bignone, ",
+			"red"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -125,7 +498,24 @@
 		"regex": false,
 		"replace_history":
 		[
-			"length"
+			"rtb",
+			"NaN",
+			"",
+			"e",
+			"NaN",
+			" ",
+			"NaN",
+			"",
+			"$",
+			"",
+			"length",
+			"osting an LGR",
+			"Tecce, T. E.",
+			"Piatti, A. E.",
+			"Artale, M. C.",
+			"Tissera, P. A.",
+			"Pellizza, L. J.",
+			"Bignone, L. A."
 		],
 		"reverse": false,
 		"show_context": true,
@@ -136,144 +526,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "core/models.py",
+					"file": "gadget/pygadget2.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3371,
+						"buffer_size": 42992,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1249,
-								1249
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "core/utils.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3173,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								928,
-								928
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "rockstar/utils.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 566,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								566,
-								566
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "gadget/utils.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3964,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								42,
-								42
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1755.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "build_db.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 697,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								697,
-								697
+								14151,
+								14151
 							]
 						],
 						"settings":
@@ -287,15 +557,25 @@
 								{
 									"characters": ".",
 									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
 								}
 							],
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 14370.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -303,11 +583,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 39.0
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 55.0
 	},
 	"layout":
 	{
@@ -336,11 +616,27 @@
 	{
 		"height": 0.0
 	},
+	"output.git-commit":
+	{
+		"height": 112.0
+	},
+	"output.git-flow-feature-start":
+	{
+		"height": 204.0
+	},
+	"output.git-push":
+	{
+		"height": 112.0
+	},
+	"output.latextools":
+	{
+		"height": 198.0
+	},
 	"pinned_build_system": "",
 	"project": "hog.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 114.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -354,12 +650,16 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 1000.0,
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"~/Development/hog/hog.sublime-project"
+			]
 		],
-		"width": 0.0
+		"width": 760.0
 	},
 	"select_symbol":
 	{
@@ -375,10 +675,10 @@
 	{
 	},
 	"show_minimap": true,
-	"show_open_files": false,
+	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 469.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
