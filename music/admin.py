@@ -118,7 +118,7 @@ class IcAdmin(admin.ModelAdmin):
                     'gadget_spreadcoarse',
                     'gadget_longids',
                     )
-    list_filter = ('baryons', 'levelmin', 'levelmax', 'region')
+    list_filter = ('category', 'baryons', 'levelmin', 'levelmax', 'region')
     search_fields = ['name', 'id']
 
 
