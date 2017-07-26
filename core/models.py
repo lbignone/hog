@@ -5,10 +5,30 @@ from django.conf import settings
 
 from core.utils import region_filename
 
+from mptt.models import MPTTModel, TreeForeignKey, TreeManyToManyField
+from mptt.forms import TreeNodeChoiceField
+
+
+class Category(MPTTModel):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=200, blank=True)
+    parent = TreeForeignKey('self', null=True, blank=True,
+                            related_name='children', db_index=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "categories"
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
 
 class Simulation(PolymorphicModel):
 
     name = models.CharField(max_length=200)
+    category = TreeManyToManyField(Category, blank=True)
     location = models.CharField(max_length=200, blank=True)
     Omega_m = models.FloatField(blank=True, null=True)
     Omega_l = models.FloatField(blank=True, null=True)
@@ -32,6 +52,7 @@ class Snapshot(PolymorphicModel):
 
 class Ic(PolymorphicModel):
     name = models.CharField(max_length=200)
+    category = TreeManyToManyField(Category, blank=True)
     fname = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
@@ -84,8 +105,8 @@ class Region(PolymorphicModel):
 
         """
         root = settings.MEDIA_ROOT
-        path = root + '/regions/{id:d}_{name:s}/'
-        path = path.format(id=self.id, name=self.name)
+        path = root + '/regions/{id:d}/'
+        path = path.format(id=self.id)
 
         return path
 
@@ -95,9 +116,9 @@ class Region(PolymorphicModel):
 
         """
         path = self.get_path()
-        fname = path + 'region_point_file.txt'
+        fname = path + '{id:d}_region_point_file.txt'
 
-        return fname
+        return fname.format(id=self.id)
 
 
 class EllipsoidRegion(Region):
@@ -107,6 +128,9 @@ class EllipsoidRegion(Region):
     a = models.FloatField(blank=True, null=True)
     b = models.FloatField(blank=True, null=True)
     c = models.FloatField(blank=True, null=True)
+
+    def rvir(self):
+        return self.structure.get_radius()
 
 
 class BoxRegion(Region):

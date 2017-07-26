@@ -9,8 +9,8 @@ from django.conf import settings
 class MusicRegion(PolymorphicModel):
     pass
 
-    def __str__(self):
-        return self.region.__str__()
+    # def __str__(self):
+    #   return self.region.__str__()
 
 
 class MusicBoxRegion(MusicRegion):
@@ -53,6 +53,9 @@ class MusicEllipsoidRegion(MusicRegion):
     @property
     def region_point_file(self):
         return self.region.get_point_filename()
+
+    def __str__(self):
+        return self.region.__str__()
 
 
 class MusicIc(models.Model):
@@ -360,9 +363,9 @@ class MusicGadgetIc(GadgetIc, MusicIc):
 
         """
         path = self.get_path()
-        fname = path + self.name + '.conf'
+        fname = path + '{id:d}_{name:s}' + '.conf'
 
-        return fname
+        return fname.format(id=self.id, name=self.name)
 
     def get_ic_filename(self):
         """
@@ -382,3 +385,4 @@ class Seed(models.Model):
 
     class Meta:
         unique_together = ('ic', 'level')
+

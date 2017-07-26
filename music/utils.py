@@ -1,4 +1,5 @@
 from core.utils import makedirs
+from django.db import transaction
 
 
 def bool_to_string(bool_value):
@@ -147,3 +148,29 @@ def save_config_file(ic):
 
     with open(fname, 'w') as fout:
         fout.write(output)
+
+
+@transaction.atomic
+def create_ic_from_existing(ic):
+    from .admin import fieldsets, gadget_fieldsets
+    from .models import MusicGadgetIc
+    from music.models import Seed
+
+    fieldsets = fieldsets + gadget_fieldsets
+
+    new_ic = MusicGadgetIc()
+
+    for group in fieldsets:
+        for field in group[1]['fields']:
+            if field == 'category':
+                continue
+            setattr(new_ic, field, getattr(ic, field))
+
+    new_ic.save()
+
+    seeds = ic.seed_set.all()
+    for seed in seeds:
+        new_seed = Seed(ic=new_ic, level=seed.level, value=seed.value)
+        new_seed.save()
+
+    return new_ic

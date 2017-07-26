@@ -6,6 +6,7 @@ from numpy import fromstring, fromfile, concatenate, array
 from numpy import sqrt, searchsorted, unique
 import pandas as pd
 from functools import wraps
+from functools import lru_cache
 # from astropy.utils.console import ProgressBar
 
 from astropy import units as u
@@ -13,6 +14,8 @@ from astropy import units as u
 from copy import copy
 
 import numpy as np
+
+from scipy.spatial.ckdtree import cKDTree
 
 ## This private helper function returns the age of a star (in yr) given the universe expansion factor
 # when the star was born (in range 0-1)
@@ -361,7 +364,7 @@ class Simulation:
 
         f.close()
 
-    def read_block(self, block_type, particle_type, iter_files=False):
+    def read_block(self, block_type, particle_type, iter_files=True, all_files=False):
         """Read block from snapshot file
 
         Args:
@@ -388,7 +391,16 @@ class Simulation:
         """
 
         if iter_files:
-            return self.read_block_iter(block_type, particle_type)
+            if self.file_number > 1:
+                return self.read_block_iter(block_type, particle_type)
+        elif all_files:
+            full_block = pd.DataFrame()
+            block_iter = self.read_block_iter(block_type, particle_type)
+            for b in block_iter:
+                full_block = pd.concat([full_block, b])
+            
+            return full_block
+
 
         s = self.swap
 
@@ -455,7 +467,7 @@ class Simulation:
             columns = [block_type]
 
         if block_type != "id":
-            ids = self.read_block("id", particle_type)
+            ids = self.read_block("id", particle_type, iter_files=False, all_files=False)
             final_block = pd.DataFrame(block, columns=columns,
                                        index=ids.values)
         else:
@@ -465,11 +477,17 @@ class Simulation:
 
         return final_block
 
+    def read_block_file_numer(self, block_type, particle_type, file_number):
+        snap = copy(self)
+        snap.name = snap.basename + ".%d" % file_number
+        block = snap.read_block(block_type, particle_type, iter_files=False, all_files=False)
+        return block
+
     def read_block_iter(self, block_type, particle_type):
         for i in range(self.file_number):
             snap = copy(self)
             snap.name = snap.basename + ".%d" % i
-            block = snap.read_block(block_type, particle_type)
+            block = snap.read_block(block_type, particle_type, iter_files=False, all_files=False)
             yield block
 
     def _compute_offset(self, block_type, particle_type):
@@ -616,6 +634,63 @@ class Simulation:
 
         return string
 
+    @lru_cache()
+    def compute_ids_offset(self, particle_type, ids):
+        block = self.read_block('id', particle_type)
+        index_per_file = []
+        if self.file_number == 1:
+            block = [block, ]
+        
+        n_located = 0
+        for b in block:
+            if len(ids) == n_located:
+                break
+            ind = b.loc[b.isin(ids)].index.values
+            index_per_file.append(ind)
+            n_located += len(ind)
+
+        while len(index_per_file) < self.file_number:
+            index_per_file.append([])
+
+        return index_per_file
+
+    def read_block_from_id_offsets(self, block_type, particle_type, offsets):
+        result = pd.DataFrame()
+        for file_number, o in enumerate(offsets):
+            if len(o) == 0:
+                continue
+            else:
+                if self.file_number > 1:
+                    block = self.read_block_file_numer(block_type, particle_type, file_number)
+                    result = pd.concat([result, block.iloc[o]])
+                else:
+                    block = self.read_block(block_type, particle_type)
+                    result = block.iloc[o]
+
+        return result
+
+    def read_block_by_ids(self, block_type, particle_type, ids):
+        ids = tuple(ids)
+        offsets = self.compute_ids_offset(particle_type, ids)
+
+        block = self.read_block_from_id_offsets(block_type, particle_type, offsets)
+
+        return block
+
+    def select_ids_in_radius(self, center, radius, particle_type):
+        pos = self.read_block('pos', particle_type)
+        if self.file_number == 1:
+            pos = [pos,]
+
+        ids = np.array([])
+        for p in pos:
+            tree = cKDTree(p.values, boxsize=self.box_size)
+            ind = tree.query_ball_point(center, radius, n_jobs=-1)
+            ids = np.concatenate([ids, p.index[ind]])
+            del(tree)
+
+        return ids
+
 
 class Fof:
 
@@ -723,8 +798,11 @@ class Fof:
                     group += 1
 
     def read_block_by_group(self, block_type, particle_type, group):
-        ids = self.ids[group][particle_type]
-        block = self.snap.filter_by_ids(block_type, particle_type, ids)
+        ids = tuple(self.ids[group][particle_type])
+        snap = self.snap
+
+        offsets = snap.compute_ids_offset(particle_type, ids)
+        block = snap.read_block_from_id_offsets(block_type, particle_type, offsets)
 
         return block
 
@@ -916,26 +994,15 @@ class Subfind:
             nmax = nmin + self.sublen[sub]
             self.ids.append(all_ids[nmin:nmax])
 
-    def read_block_by_subhalo(self, block_type, particle_type, subhalo,
-                              sorter=[]):
-        """Read snapshot block  filtered by subhalo
 
-        Args:
-            block_type (str):   Type of block.
-            particle_type (str): Type of particle.
-            subhalo (int): number of subhalo to read
+    def read_block_by_subhalo(self, block_type, particle_type, subhalo):
+        ids = tuple(self.ids[subhalo])
+        snap = self.snap
 
-        Returns:
-            Pandas DataFrame as returned by read_block
-        """
+        offsets = snap.compute_ids_offset(particle_type, ids)
+        block = snap.read_block_from_id_offsets(block_type, particle_type, offsets)
 
-        block = self.snap.read_block(block_type, particle_type)
-
-        sub_ids = self.ids[subhalo]
-
-        fb, sorter = filter_bloc_by_ids(block, sub_ids, sorter)
-
-        return fb, sorter
+        return block
 
     def optical_radius(self, subhalo, factor=0.83):
         """Compute optical radius for a given subhalo

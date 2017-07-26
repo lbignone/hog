@@ -134,6 +134,60 @@ def create_ellipsoid_region(structure, rtb):
     return region
 
 
+def compute_ellipsoid(reg):
+    from subprocess import check_output
+
+    fname = reg.get_point_filename()
+
+    r = check_output(['ellipsoid', fname])
+
+    r = r.splitlines()
+
+    A = [[float(t) for t in (r[3].split(b'=')[1].split(b','))],
+         [float(t) for t in (r[4].split(b'=')[1].split(b','))],
+         [float(t) for t in (r[5].split(b'=')[1].split(b','))],
+         ]
+
+    A = np.array(A)
+
+    reg.A_arr = A
+
+    a, b, c = (np.linalg.eigvals(A))**(-0.5)
+
+    V = (4. / 3) * np.pi * a * b * c
+
+    structure = reg.structure
+    snapshot = structure.catalogue.snapshot
+    sim = snapshot.simulation
+    rvir = structure.get_radius().to(sim.unit_length)
+    Vn = (4. / 3) * np.pi * rvir**3
+    reg.V_norm = V * sim.get_box_length()**3 / Vn
+
+    reg.V = V
+    reg.a = a
+    reg.b = b
+    reg.c = c
+
+    xc, yc, zc = [float(t) for t in (r[6].split(b'=')[1].split(b','))]
+    reg.xc = xc
+    reg.yc = yc
+    reg.zc = zc
+
+    # from music.plot_ellipsoid import plot_ellipsoid
+    # import matplotlib.pyplot as plt
+    # from mpl_toolkits.mplot3d import Axes3D
+
+    # fig = plt.figure()
+    # ax = fig.add_subplot(111, projection='3d')
+    # plot_ellipsoid([xc, yc, zc], A, ax, c='b')
+    # img_fname = abs_path + str(self.id) + "_" + self.name + ".svg"
+    # plt.savefig(img_fname)
+
+    reg.save()
+
+    return r
+
+
 def set_region_point_file(region):
     """
     Set the region point file based on model data.
@@ -145,6 +199,7 @@ def set_region_point_file(region):
     region.name = str(structure)
     region.snapshot = structure.catalogue.snapshot
     region.structure = structure
+    region.N = len(pos)
     region.save()
 
     fname = save_region_point_file(region, pos)
