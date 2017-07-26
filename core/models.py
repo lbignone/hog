@@ -75,6 +75,7 @@ class Structure(PolymorphicModel):
 
 class Region(PolymorphicModel):
     name = models.CharField(max_length=200, blank=False)
+    category = TreeManyToManyField(Category, blank=True)
     snapshot = models.ForeignKey(Snapshot, on_delete=models.PROTECT,
                                  blank=True, null=True)
 

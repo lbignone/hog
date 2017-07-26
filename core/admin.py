@@ -49,6 +49,7 @@ class EllipsoidRegionAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None, {'fields': ['name',
+                           'category', 
                            'structure',
                            'rtb',
                            ]
