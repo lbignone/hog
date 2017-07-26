@@ -121,6 +121,9 @@ class Region(PolymorphicModel):
 
         return fname.format(id=self.id)
 
+    class Meta:
+        unique_together = (('structure', 'rtb'),)
+
 
 class EllipsoidRegion(Region):
 
