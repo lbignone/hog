@@ -58,6 +58,7 @@ class EllipsoidRegionAdmin(admin.ModelAdmin):
     ]
 
     actions = [set_region_point_file, compute_ellipsoid, compute_N]
+    list_filter = ('category', 'rtb')
 
 
 class StructureRegionAdmin(admin.ModelAdmin):
