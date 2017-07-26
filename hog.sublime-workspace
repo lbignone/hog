@@ -8,44 +8,100 @@
 	"buffers":
 	[
 		{
+			"file": "/home/lbignone/music/models.py",
+			"settings":
+			{
+				"buffer_size": 24494,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gadget/pygadget.py",
+			"settings":
+			{
+				"buffer_size": 40560,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Remote:   origin @ git@bitbucket.org:astronum-iafe/hog.git\nLocal:    develop ~/Development/hog\nHead:     9010932 initial commit\n\n\nChanges:\n\tModified   hog.sublime-workspace\n\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
+			"settings":
+			{
+				"buffer_size": 935,
+				"line_ending": "Unix",
+				"name": "*git-status*: hog",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"file": "/home/lbignone/Development/music/ramB_l7.conf",
+			"settings":
+			{
+				"buffer_size": 1459,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/lbignone/Development/music/ramDM_l8.conf",
+			"settings":
+			{
+				"buffer_size": 1459,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/lbignone/Development/music/ramDM_l9.conf",
+			"settings":
+			{
+				"buffer_size": 1459,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/lbignone/music/admin.py",
+			"settings":
+			{
+				"buffer_size": 4448,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "music/models.py",
+			"settings":
+			{
+				"buffer_size": 11388,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "music/admin.py",
+			"settings":
+			{
+				"buffer_size": 2251,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "hog/settings.py",
+			"settings":
+			{
+				"buffer_size": 3279,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "core/models.py",
 			"settings":
 			{
 				"buffer_size": 3371,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "core/utils.py",
-			"settings":
-			{
-				"buffer_size": 3173,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rockstar/utils.py",
-			"settings":
-			{
-				"buffer_size": 566,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "gadget/utils.py",
-			"settings":
-			{
-				"buffer_size": 3964,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "build_db.py",
-			"settings":
-			{
-				"buffer_size": 697,
-				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		}
@@ -57,16 +113,36 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 92.0,
-		"last_filter": "install",
+		"height": 392.0,
+		"last_filter": "lint",
 		"selected_items":
 		[
+			[
+				"lint",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"status",
+				"Git: Status"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"flow",
+				"Git-flow: Feature Start"
+			],
+			[
+				"init",
+				"Git: Init"
+			],
 			[
 				"install",
 				"Package Control: Install Package"
 			]
 		],
-		"width": 485.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -92,6 +168,17 @@
 	],
 	"file_history":
 	[
+		"/home/lbignone/Results/LGRB_sizes/lyman17_tabA2.html",
+		"/home/lbignone/Development/hog/build_db.py",
+		"/home/lbignone/simulations/lgzoom/out512/halos/14/hlist.txt",
+		"/home/lbignone/Development/hog/gadget/utils.py",
+		"/home/lbignone/Development/hog/rockstar/utils.py",
+		"/home/lbignone/Development/hog/rockstar/models.py",
+		"/home/lbignone/Development/hog/core/utils.py",
+		"/home/lbignone/Development/hog/core/models.py",
+		"/home/lbignone/Development/hog/music/models.py",
+		"/home/lbignone/Development/hog/media/regions/3_out512/14/Catalogue/33306/region_point_file.txt",
+		"/home/lbignone/Development/hog/media/regions/2_out512/14/Catalogue/6893/region_point_file.txt",
 		"/home/lbignone/Development/hog/rockstar/utils.pyc",
 		"/home/lbignone/Publications/mergers_mnras/draft_morphology.tex",
 		"/var/tmp/kdecache-lbignone/krun/9925_0_draft_morphology.tex"
@@ -109,9 +196,16 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"copy",
+			"wraps",
+			"output",
+			"for ",
+			"Catalogue",
+			"save_region_point_file",
+			"33306",
 			"det_pos",
 			"lenght",
 			"unit_",
@@ -136,24 +230,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "core/models.py",
+					"file": "/home/lbignone/music/models.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3371,
+						"buffer_size": 24494,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1249,
-								1249
+								24247,
+								24247
 							]
 						],
 						"settings":
@@ -161,6 +255,126 @@
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5130.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "gadget/pygadget.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 40560,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								360,
+								360
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 935,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								139,
+								139
+							]
+						],
+						"settings":
+						{
+							"__vi_external_disable": true,
+							"draw_white_space": "none",
+							"git_repo": "/home/lbignone/Development/hog",
+							"git_status": true,
+							"git_view": "status",
+							"syntax": "Packages/SublimeGit/syntax/SublimeGit Status.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/lbignone/Development/music/ramB_l7.conf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1459,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1093,
+								1093
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/lbignone/Development/music/ramDM_l8.conf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1459,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								69,
+								69
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -170,110 +384,78 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "core/utils.py",
+					"buffer": 5,
+					"file": "/home/lbignone/Development/music/ramDM_l9.conf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3173,
+						"buffer_size": 1459,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								928,
-								928
+								948,
+								948
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 270.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "rockstar/utils.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 566,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								566,
-								566
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "gadget/utils.py",
+					"buffer": 6,
+					"file": "/home/lbignone/music/admin.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3964,
+						"buffer_size": 4448,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								42,
-								42
+								4268,
+								4268
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1755.0,
+						"translation.y": 1890.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "build_db.py",
+					"buffer": 7,
+					"file": "music/models.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 697,
+						"buffer_size": 11388,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								697,
-								697
+								9687,
+								9687
 							]
 						],
 						"settings":
@@ -289,13 +471,114 @@
 									"selector": "source.python - string - constant.numeric"
 								}
 							],
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2814.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "music/admin.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2251,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1528,
+								1528
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": ".",
+									"selector": "source.python - string - comment - constant.numeric"
+								},
+								{
+									"characters": ".",
+									"selector": "source.python - string - constant.numeric"
+								}
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "hog/settings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3279,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3,
+								3
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "core/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3371,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1120,
+								1120
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
 					"type": "text"
 				}
 			]
@@ -307,7 +590,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 31.0
 	},
 	"layout":
 	{
@@ -336,11 +619,19 @@
 	{
 		"height": 0.0
 	},
+	"output.git-commit":
+	{
+		"height": 100.0
+	},
+	"output.git-push":
+	{
+		"height": 100.0
+	},
 	"pinned_build_system": "",
 	"project": "hog.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
