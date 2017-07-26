@@ -28,7 +28,8 @@ def compute_N(modeladmin, request, queryset):
 
 class EllipsoidRegionAdmin(admin.ModelAdmin):
 
-    list_display = ('structure',
+    list_display = ('id',
+                    'structure',
                     'rtb',
                     'rvir',
                     'N',
