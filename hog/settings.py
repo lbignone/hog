@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'suit',
     'django_extensions',
     'mptt',
     'core.apps.CoreConfig',
