@@ -1,5 +1,8 @@
 from core.utils import makedirs
 from django.db import transaction
+import os
+
+module_dir = os.path.dirname(__file__)
 
 
 def bool_to_string(bool_value):
@@ -148,6 +151,27 @@ def save_config_file(ic):
 
     with open(fname, 'w') as fout:
         fout.write(output)
+
+
+def save_pbs_file(ic, template='geryon', ppn=8, walltime='72:00:00', music_path='/home/lbignone/wmmw/initial_conditions/MUSIC'):
+
+    path = ic.get_path()
+    fname = ic.get_config_filename()
+    name = fname.split('.')[0]
+    name = name.split('/')[-1]
+       
+    fpbs = path + name + '.pbs'
+    music_conf = name + '.conf'
+
+    template_path = os.path.join(module_dir, template)
+
+    with open(template_path, 'r') as f_template:
+        template = f_template.read()
+    
+    template = template.format(name=name, ppn=ppn, walltime=walltime, music_conf=music_conf, music_path=music_path)
+
+    with open(fpbs, 'w') as fout:
+        fout.write(template)
 
 
 @transaction.atomic
