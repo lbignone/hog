@@ -93,7 +93,7 @@ def search_sorting(block, ids):
     sorter = index.argsort()
     ind = index.searchsorted(ids, sorter=sorter)
 
-    return block.iloc[ind]
+    return block.iloc[sorter].iloc[ind]
 
 
 def get_pos_from_ids(snapshot, ids):
