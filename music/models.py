@@ -7,6 +7,7 @@ from django.conf import settings
 
 
 class MusicRegion(PolymorphicModel):
+    _point_filename = None
     pass
 
     # def __str__(self):
@@ -50,9 +51,15 @@ class MusicEllipsoidRegion(MusicRegion):
     def region_type(self):
         return 'ellipsoid'
 
+    def get_path(self):
+        return self.region.get_path()
+
     @property
     def region_point_file(self):
-        return self.region.get_point_filename()
+        if self._point_filename is None:
+            self._point_filename = self.region.get_point_filename()
+        
+        return self._point_filename
 
     def __str__(self):
         return self.region.__str__()
@@ -336,7 +343,7 @@ class MusicGadgetIc(GadgetIc, MusicIc):
 
     @property
     def output_format(self):
-        return 'gadget'
+        return 'gadget2'
 
     def output_list(self):
         from music.utils import gadget_output_list

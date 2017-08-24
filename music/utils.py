@@ -1,5 +1,7 @@
 from core.utils import makedirs
+from core.rsync import rsync
 from django.db import transaction
+from django.conf import settings
 import os
 
 module_dir = os.path.dirname(__file__)
@@ -107,7 +109,7 @@ def config_output(ic):
 
     output_list = [
         ('format', ic.output_format, '{:s}'),
-        ('filename', ic.filename, '{:s}'),
+        ('filename', '{:d}_'.format(ic.id) + ic.filename, '{:s}'),
     ]
 
     output_list += ic.output_list()
@@ -153,7 +155,19 @@ def save_config_file(ic):
         fout.write(output)
 
 
-def save_pbs_file(ic, template='geryon', ppn=8, walltime='72:00:00', music_path='/home/lbignone/wmmw/initial_conditions/MUSIC'):
+def transfer_to_host(ic, host='geryon2', media_path='/fast_scratch1/lbignone/hog/media/'):
+    root = settings.MEDIA_ROOT
+    conf_path = ic.get_path()
+    conf_path_strip = conf_path[len(root):]
+    rsync(conf_path, host + ':' + media_path + conf_path_strip)
+
+    region_path = ic.region.get_path()
+    region_path_strip = region_path[len(root):]
+
+    rsync(region_path, host + ':' + media_path + region_path_strip)
+
+
+def save_pbs_file(ic, template='geryon.pbs', ppn=8, walltime='72:00:00', music_path='/home/lbignone/wmmw/codes/ohahn-music-b3803b37a3ce'):
 
     path = ic.get_path()
     fname = ic.get_config_filename()
@@ -172,6 +186,23 @@ def save_pbs_file(ic, template='geryon', ppn=8, walltime='72:00:00', music_path=
 
     with open(fpbs, 'w') as fout:
         fout.write(template)
+
+
+def setup_run(ic, host='geryon2', template='geryon.pbs', ppn=8, walltime='72:00:00', music_path='/home/lbignone/wmmw/initial_conditions/MUSIC', media_path=settings.MEDIA_ROOT):
+    root = settings.MEDIA_ROOT
+    region_point_file = ic.region.region_point_file
+    region_point_file_strip = region_point_file[len(root):]
+
+    # change the location of the point_filename
+    ic.region._point_filename = media_path + region_point_file_strip
+
+    save_config_file(ic)
+
+    # restore location point_filename
+    ic.region._point_filename = None
+
+    save_pbs_file(ic, template=template, ppn=ppn, walltime=walltime, music_path=music_path)
+    transfer_to_host(ic, host=host, media_path=media_path)
 
 
 @transaction.atomic
