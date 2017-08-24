@@ -6,9 +6,7 @@
 
 #PBS -k oe
 
-#PBS -o /home/lbignone/test.o
-
-#PBS -e /home/lbignone/test.e
+#PBS -j oe
 
 #PBS -l nodes=1:ppn={ppn:d}
 
@@ -34,14 +32,29 @@ echo $PBS_O_WORKDIR
 
 #
 
-echo $PATH
-
 module purge
 
-module load openmpi-1.6.5 gsl-1.16 fftw-2.1.5
+module load openmpi-1.10.4
+module load gsl_gnu
 
 export OMP_NUM_THREADS={ppn:d}
 
 echo $OMP_NUM_THREADS
 
 {music_path:s} {music_conf:s}
+
+# move particles to bndry
+python $HOME/wmmmw/initial_conditions/move_to_bndry.py *.dat
+
+# move output file to current folder
+mv $HOME/$PBS_JOBNAME.o${{PBS_JOBID%.geryon2}} .
+
+# archive results
+rsync -avzh --update ../../music/* /data4/lbignone/hog/media/music/.
+rsync -avzh --update ../../regions/* /data4/lbignone/hog/media/regions/.
+
+# delete all output
+rm *.dat
+rm wnoise*
+rm *.txt
+rm *.o*
