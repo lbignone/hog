@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import GadgetSimulation, GadgetSnapshot, GadgetIc
+from .models import GadgetSimulation, GadgetRun, GadgetSnapshot, GadgetIc
+from .utils import makefile_options
 
 
 def import_from_location(modeladmin, request, queryset):
@@ -32,10 +33,10 @@ class GadgetSimulationAdmin(admin.ModelAdmin):
         'mass_stars',
         'mass_bndry',
 
-        'pot',
-        'accel',
-        'endt',
-        'tstp',
+        'OUTPUTPOTENTIAL',
+        'OUTPUTACCELERATION',
+        'OUTPUTCHANGEOFENTROPY',
+        'OUTPUTTIMESTEP',
 
         'sfr',
         'feedback',
@@ -46,6 +47,83 @@ class GadgetSimulationAdmin(admin.ModelAdmin):
     )
 
     actions = [import_from_location, ]
+
+
+class GadgetRunAdmin(GadgetSimulationAdmin):
+    fieldsets = [(None, {'fields': ['name',
+                                    'category',
+                                    'ic',]}),
+                 ('MAKEFILE options', {'fields': makefile_options}),
+                 ('Filenames and file formats', {'fields': ['outputDir',
+                                                           'snapFormat',
+                                                           'snapshot_file_base',
+                                                           'file_number',
+                                                           'initCondFile',
+                                                           'iCFormat',
+                                                           'energyFile',
+                                                           'infoFile',
+                                                           'timingsFile',
+                                                           'cpuFile',
+                                                           'restartFile',]}),
+                 ('CPU-time limit and restart', {'fields': ['timeLimitCPU',
+                                                            'resubmitCommand',
+                                                            'resubmitOn',
+                                                            'cpuTimeBetRestartFile',]}),
+                 ('Simulation specific parameters', {'fields': ['timeBegin',
+                                                                'timeMax',
+                                                                'boxlength',
+                                                                'periodicBoundariesOn',
+                                                                'comovingIntegrationOn',]}),
+                 ('Cosmological parameters', {'fields': ['Omega_m',
+                                                         'Omega_l',
+                                                         'h',]}),
+                 ('Memory allocation', {'fields': ['BufferSize',
+                                                   'PartAllocFactor',
+                                                   'TreeAllocFactor',]}),
+                 ('Gravitational force accuracy', {'fields': ['TypeOfOpeningCriterion',
+                                                              'ErrTolTheta',
+                                                              'ErrTolForceAcc',]}),
+                 ('Time integration accuracy', {'fields': ['MaxSizeTimestep',
+                                                           'MinSizeTimestep',
+                                                           'TypeOfTimestepCriterion',
+                                                           'ErrTolIntAccuracy',
+                                                           'TreeDomainUpdateFrequency',
+                                                           'MaxRMSDisplacementFac',]}),
+                 ('Output of snapshot files', {'fields': ['OutputListOn',
+                                                          'OutputListFilename',
+                                                          'TimeOfFirstSnapshot',
+                                                          'TimeBetSnapshot',
+                                                          'TimeBetStatistics',
+                                                          'NumFilesWrittenInParallel']}),
+                 ('System of units', {'fields': ['velocity_in_cm_per_s',
+                                                 'length_in_cm',
+                                                 'mass_in_g',
+                                                 'GravityConstantInternal',]}),
+                 ('SPH parameters', {'fields': ['DesNumNgb',
+                                                'MaxNumNgbDeviation',
+                                                'ArtBulkViscCons',
+                                                'CourantFac',
+                                                'InitGasTemp',
+                                                'MinGasTemp',
+                                                'MinGasHsmlFractional',]}),
+                 ('Gravitational softening', {'fields': ['SofteningGas',
+                                                         'SofteningHalo',
+                                                         'SofteningDisk',
+                                                         'SofteningBulge',
+                                                         'SofteningStars',
+                                                         'SofteningBndry',
+                                                         'SofteningGasMaxPhys',
+                                                         'SofteningHaloMaxPhys' ,
+                                                         'SofteningDiskMaxPhys' ,
+                                                         'SofteningBulgeMaxPhys',
+                                                         'SofteningStarsMaxPhys',
+                                                         'SofteningBndryMaxPhys',]}),
+                  ('Others', {'fields': ['sfr',
+                                         'feedback',
+                                         'cooling',
+                                         'metals',
+                                         'entr_ics']}),
+                ]
 
 
 class GadgetSnapshotAdmin(admin.ModelAdmin):
@@ -67,5 +145,6 @@ class GadgetSnapshotAdmin(admin.ModelAdmin):
 
 
 admin.site.register(GadgetSimulation, GadgetSimulationAdmin)
+admin.site.register(GadgetRun, GadgetRunAdmin)
 admin.site.register(GadgetSnapshot, GadgetSnapshotAdmin)
 admin.site.register(GadgetIc)

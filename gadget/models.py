@@ -1,5 +1,6 @@
 from django.db import models
 from django.db import transaction
+from django.conf import settings
 
 from gadget import pygadget
 
@@ -14,13 +15,13 @@ from astropy import units as u
 
 class GadgetSimulation(Simulation):
 
-    snapshot_file_base = models.CharField(max_length=200)
-    file_number = models.IntegerField(blank=False)
+    snapshot_file_base = models.CharField(max_length=200, default='snapshot')
+    file_number = models.IntegerField(blank=False, default=1)
 
-    pot = models.BooleanField(default=False)
-    accel = models.BooleanField(default=False)
-    endt = models.BooleanField(default=False)
-    tstp = models.BooleanField(default=False)
+    OUTPUTPOTENTIAL = models.BooleanField(default=False)
+    OUTPUTACCELERATION = models.BooleanField(default=False)
+    OUTPUTCHANGEOFENTROPY = models.BooleanField(default=False)
+    OUTPUTTIMESTEP = models.BooleanField(default=False)
 
     velocity_in_cm_per_s = models.FloatField(default=1e5)
     length_in_cm = models.FloatField(default=3.085678e21)
@@ -39,7 +40,7 @@ class GadgetSimulation(Simulation):
 
     cooling = models.BooleanField(default=False)
 
-    boxlength = models.FloatField(blank=True, null=True)
+    boxlength = models.FloatField(blank=True, null=True, default=10000.0)
 
     stellar_age = models.BooleanField(default=False)
 
@@ -168,6 +169,151 @@ class GadgetSimulation(Simulation):
 
         s = GadgetSnapshot(**d)
         s.save()
+
+
+class GadgetRun(GadgetSimulation):
+
+    # MAKEFILE options
+    # Basic operation mode of code
+    PERIODIC = models.BooleanField(default=True)
+    UNEQUALSOFTENINGS = models.BooleanField(default=False)
+
+    # Things that are always recommended
+    PEANOHILBERT = models.BooleanField(default=True)
+    WALLCLOCK = models.BooleanField(default=True)
+
+    # TreePM options
+    PMGRID = models.IntegerField(default=128)
+    PLACEHIGHRESREGION = models.IntegerField(null=True, blank=True)
+    ENLARGEREGION = models.FloatField(null=True, blank=True)
+    ASMTH = models.FloatField(default=1.25)
+    RCUT = models.FloatField(default=4.5)
+
+    # Single/double precision
+    DOUBLEPRECISION = models.BooleanField(default=False)
+    DOUBLEPRECISION_FFTW = models.BooleanField(default=False)
+
+    # Time integration options
+    SYNCHRONIZATION = models.BooleanField(default=True)
+    FLEXSTEPS = models.BooleanField(default=False)
+    PSEUDOSYMMETRIC = models.BooleanField(default=False)
+    NOSTOP_WHEN_BELOW_MINTIMESTEP = models.BooleanField(default=False)
+    NOPMSTEPADJUSTMENT = models.BooleanField(default=False)
+
+    # Output options
+    HAVE_HDF5 = models.BooleanField(default=False)
+    # OUTPUTPOTENTIAL
+    # OUTPUTACCELERATION
+    # OUTPUTCHANGEOFENTROPY
+    # OUTPUTTIMESTEP
+
+    # Things for special behaviour
+    LONGIDS = models.BooleanField(default=False)
+
+    # Parameterfile options
+    # Filenames and file formats
+    OutputDir = models.CharField(max_length=200)
+    # SnapshotFileBase
+    SnapFormat = models.IntegerField(default=1)
+    # NumFilesPerSnapshot
+    InitCondFile = models.CharField(max_length=200)
+    ICFormat = models.IntegerField(default=1)
+    EnergyFile = models.CharField(max_length=200, default='energy.txt')
+    InfoFile = models.CharField(max_length=200, default='info.txt')
+    TimingsFile = models.CharField(max_length=200, default='timings.txt')
+    CpuFile = models.CharField(max_length=200, default='cpu.txt')
+    RestartFile = models.CharField(max_length=200, default='restart.txt')
+
+    # CPU-time limit and restart options
+    TimeLimitCPU = models.FloatField(default=2.4e+06)
+    ResubmitCommand = models.CharField(max_length=200, default='my-scriptfile')
+    ResubmitOn = models.BooleanField(default=False)
+    CpuTimeBetRestartFile = models.FloatField(default=15000)
+    
+    # Simulation specific parameters
+    TimeBegin = models.FloatField(default=0.0163934)
+    TimeMax = models.FloatField(default=1)
+    # BoxSize
+    PeriodicBoundariesOn = models.BooleanField(default=True)
+    ComovingIntegrationOn = models.BooleanField(default=True)
+
+    # Cosmological parameters
+    # HubbleParam
+    # Omega0
+    # OmegaLambda
+    # OmegaBaryon
+
+    # Memory allocation
+    BufferSize = models.FloatField(default=400)
+    PartAllocFactor = models.FloatField(default=32)
+    TreeAllocFactor = models.FloatField(default=0.7)
+
+    # Gravitational force accuracy
+    TypeOfOpeningCriterion = models.IntegerField(default=1)
+    ErrTolTheta = models.FloatField(default=0.6)
+    ErrTolForceAcc = models.FloatField(default=0.0025)
+
+    # Time integration accuracy
+    MaxSizeTimestep = models.FloatField(default=0.0125)
+    MinSizeTimestep = models.FloatField(default=0)
+    TypeOfTimestepCriterion = models.IntegerField(default=0)
+    ErrTolIntAccuracy = models.FloatField(default=0.025)
+    TreeDomainUpdateFrequency = models.FloatField(default=0.1)
+    MaxRMSDisplacementFac = models.FloatField(default=0.125)
+
+    # Output of snapshot files
+    OutputListOn = models.BooleanField(default=False)
+    OutputListFilename = models.CharField(max_length=200, default='output_times.txt')
+    TimeOfFirstSnapshot = models.FloatField(default=0.047619048)
+    TimeBetSnapshot = models.FloatField(default=1.0627825)
+    TimeBetStatistics = models.FloatField(default=0.1)
+    NumFilesWrittenInParallel = models.IntegerField(default=16)
+
+    # System of units
+    UnitVelocity_in_cm_per_s = models.FloatField(default=1e5)
+    UnitLength_in_cm = models.FloatField(default=3.085678e21)
+    UnitMass_in_g = models.FloatField(default=1.989e43)
+    GravityConstantInternal = models.BooleanField(default=False)
+
+    # SPH parameters
+    DesNumNgb = models.IntegerField(default=64)
+    MaxNumNgbDeviation = models.IntegerField(default=2)
+    ArtBulkViscCons = models.FloatField(default=1.0)
+    CourantFac = models.FloatField(default=0.15)
+    InitGasTemp = models.FloatField(default=1e4)
+    MinGasTemp = models.FloatField(default=20)
+    MinGasHsmlFractional = models.FloatField(default=0.1)
+
+    # Gravitational softening
+    SofteningGas = models.FloatField(default=0)
+    SofteningHalo = models.FloatField(default=18)
+    SofteningDisk = models.FloatField(default=90)
+    SofteningBulge = models.FloatField(default=450)
+    SofteningStars = models.FloatField(default=0)
+    SofteningBndry = models.FloatField(default=0)
+
+    SofteningGasMaxPhys = models.FloatField(default=0)
+    SofteningHaloMaxPhys = models.FloatField(default=3)
+    SofteningDiskMaxPhys = models.FloatField(default=15)
+    SofteningBulgeMaxPhys = models.FloatField(default=75)
+    SofteningStarsMaxPhys = models.FloatField(default=0)
+    SofteningBndryMaxPhys = models.FloatField(default=0)
+
+    def get_path(self):
+        root = settings.MEDIA_ROOT
+        path = root + '/gadget/run/{id:d}_{name:s}/'
+        path = path.format(id=self.id, name=self.name)
+        return path
+
+    def get_makefile_path(self):
+        path = self.get_path()
+        fname = path + 'Makefile'
+        return fname
+
+    def get_config_path(self):
+        path = self.get_path()
+        fname = path + '{id:d}_{name:s}.param'
+        return fname.format(id=self.id, name=self.name)
 
 
 class GadgetSnapshot(Snapshot):

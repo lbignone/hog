@@ -1,5 +1,107 @@
 from scipy.spatial.ckdtree import cKDTree
 from gadget import pygadget
+from django.db import models
+from core.utils import makedirs
+import os
+
+
+module_dir = os.path.dirname(__file__)
+
+
+makefile_options = ['PERIODIC',
+                    'UNEQUALSOFTENINGS',
+                    'PEANOHILBERT',
+                    'WALLCLOCK',
+                    'PMGRID',
+                    'PLACEHIGHRESREGION',
+                    'ENLARGEREGION',
+                    'ASMTH',
+                    'RCUT',
+                    'DOUBLEPRECISION',
+                    'DOUBLEPRECISION_FFTW',
+                    'SYNCHRONIZATION',
+                    'FLEXSTEPS',
+                    'PSEUDOSYMMETRIC',
+                    'NOSTOP_WHEN_BELOW_MINTIMESTEP',
+                    'NOPMSTEPADJUSTMENT',
+                    'HAVE_HDF5',
+                    'OUTPUTPOTENTIAL',
+                    'OUTPUTACCELERATION',
+                    'OUTPUTCHANGEOFENTROPY',
+                    'OUTPUTTIMESTEP',
+                    'LONGIDS',]
+
+parameter_options = [
+                        'OutputDir',
+                        'SnapshotFileBase',
+                        'SnapFormat',
+                        'NumFilesPerSnapshot',
+                        'BoxSize',
+                        'PeriodicBoundariesOn',
+                        'ComovingIntegrationOn',
+                        'HubbleParam',
+                        'Omega0',
+                        'OmegaLambda',
+                        # 'OmegaBaryon',
+                        'BufferSize',
+                        'PartAllocFactor',
+                        'TreeAllocFactor',
+                        'TypeOfOpeningCriterion',
+                        'ErrTolTheta',
+                        'ErrTolForceAcc',
+                        'MaxSizeTimestep',
+                        'MinSizeTimestep',
+                        'TypeOfTimestepCriterion',
+                        'ErrTolIntAccuracy',
+                        'TreeDomainUpdateFrequency',
+                        'MaxRMSDisplacementFac',
+                        'OutputListOn',
+                        'OutputListFilename',
+                        'TimeOfFirstSnapshot',
+                        'TimeBetSnapshot',
+                        'TimeBetStatistics',
+                        'NumFilesWrittenInParallel',
+                        'UnitVelocity_in_cm_per_s',
+                        'UnitLength_in_cm',
+                        'UnitMass_in_g',
+                        'GravityConstantInternal',
+                        'DesNumNgb',
+                        'MaxNumNgbDeviation',
+                        'ArtBulkViscCons',
+                        'CourantFac',
+                        'InitGasTemp',
+                        'MinGasTemp',
+                        'MinGasHsmlFractional',
+                        'SofteningGas',
+                        'SofteningHalo',
+                        'SofteningDisk',
+                        'SofteningBulge',
+                        'SofteningStars',
+                        'SofteningBndry',
+                        'SofteningGasMaxPhys',
+                        'SofteningHaloMaxPhys',
+                        'SofteningDiskMaxPhys',
+                        'SofteningBulgeMaxPhys',
+                        'SofteningStarsMaxPhys',
+                        'SofteningBndryMaxPhys',
+                    ]
+
+
+def parameter_name(parameter):
+    new_names = {'SnapshotFileBase': 'snapshot_file_base',
+                 'NumFilesPerSnapshot': 'file_number',
+                 'BoxSize': 'boxlength',
+                 'HubbleParam': 'h',
+                 'Omega0': 'Omega_m',
+                 'OmegaLambda': 'Omega_l',
+                 'UnitVelocity_in_cm_per_s': 'velocity_in_cm_per_s',
+                 'UnitLength_in_cm': 'length_in_cm',
+                 'UnitMass_in_g': 'mass_in_g',
+                }
+    if parameter in new_names:
+        return new_names[parameter]
+    else:
+        return parameter
 
 
 def get_pygadget_sim(snapshot, is_IC=False):
@@ -170,3 +272,76 @@ def get_region_in_radius(snapshot, centre, radius, n_jobs=1):
             ids = ids.append(p.iloc[ind].index)
 
     return ids.copy()
+
+
+def save_makefile(gadget_run, template='makefile.template'):
+
+    path = gadget_run.get_path()
+    makedirs(path)
+
+    template_path = os.path.join(module_dir, template)
+
+    with open(template_path, 'r') as f:
+        content = f.read()
+
+    values = {}
+    for option in makefile_options:
+        field = getattr(gadget_run, option)
+        
+        value = '#OPT   +=   -D' + option
+        
+        if field is not None:
+        
+            if type(field) != bool:
+                value += '=' + str(field)
+            if field:
+                value = value[1:]
+        
+        values[option] = value
+    
+    content = content.format(**values)
+
+    fname = gadget_run.get_makefile_path()
+    with open(fname, 'w') as f:
+        f.write(content)
+
+
+def save_config(gadget_run):
+    path = gadget_run.get_path()
+    makedirs(path)
+
+    content = ''
+    for option in parameter_options:
+        field_name = parameter_name(option)
+        field = getattr(gadget_run, field_name)
+        content += "{:<30}".format(option) + str(field) + '\n'
+
+    fname = gadget_run.get_config_path()
+    with open(fname, 'w') as f:
+        f.write(content)
+
+
+def save_pbs_file(gadget_run, template='geryon.pbs', nodes=1, ppn=40, walltime='72:00:00'):
+
+    path = gadget_run.get_path()
+    fname = gadget_run.get_config_path()
+    name = fname.split('.')[0]
+    name = name.split('/')[-1]
+       
+    fpbs = path + name + '.pbs'
+    gadget_conf = name + '.param'
+
+    template_path = os.path.join(module_dir, template)
+
+    with open(template_path, 'r') as f_template:
+        template = f_template.read()
+    
+    template = template.format(name=name,
+                               nodes=nodes,
+                               ppn=ppn,
+                               walltime=walltime,
+                               gadget_conf=gadget_conf,
+                               )
+
+    with open(fpbs, 'w') as fout:
+        fout.write(template)
