@@ -1,0 +1,60 @@
+#PBS -V
+
+#PBS -S /bin/bash
+
+#PBS -N {name:s}
+
+#PBS -k oe
+
+#PBS -j oe
+
+#PBS -l nodes=1:ppn={ppn:d}
+
+#PBS -l walltime={walltime:s}
+
+#
+
+##------------------------------------------------------------------------ 
+
+## La variable PBS_O_WORKDIR es una variable de entorno del PBS, indica
+
+## el PATH absoluto del directorio de trabajo corriente
+
+## y es en este directorio donde quedaran los archivos de salida.
+
+cd $PBS_O_WORKDIR
+
+echo $PBS_O_WORKDIR
+
+#
+
+#
+
+#
+
+module purge
+
+module load openmpi-1.10.4
+module load gsl_gnu
+
+export OMP_NUM_THREADS={ppn:d}
+
+echo $OMP_NUM_THREADS
+
+{music_path:s} {music_conf:s}
+
+# move particles to bndry
+python $HOME/wmmmw/initial_conditions/move_to_bndry.py *.dat
+
+# move output file to current folder
+mv $HOME/$PBS_JOBNAME.o${{PBS_JOBID%.geryon2}} .
+
+# archive results
+rsync -avzh --update ../../music/* /data4/lbignone/hog/media/music/.
+rsync -avzh --update ../../regions/* /data4/lbignone/hog/media/regions/.
+
+# delete all output
+rm *.dat
+rm wnoise*
+rm *.txt
+rm *.o*
