@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'dbbackup',
     'suit',
     'django_extensions',
     'mptt',
@@ -130,3 +131,6 @@ STATIC_URL = '/static/'
 NOTEBOOK_ARGUMENTS = [
     '--notebook-dir', 'notebooks',
 ]
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': '/home/lbignone/backups/hog'}
