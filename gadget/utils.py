@@ -33,15 +33,28 @@ makefile_options = ['PERIODIC',
 
 parameter_options = [
                         'OutputDir',
-                        'SnapshotFileBase',
                         'SnapFormat',
+                        'SnapshotFileBase',
                         'NumFilesPerSnapshot',
+                        'InitCondFile',
+                        'ICFormat',
+                        'EnergyFile',
+                        'InfoFile',
+                        'TimingsFile',
+                        'CpuFile',
+                        'RestartFile',
+                        'TimeLimitCPU',
+                        'ResubmitCommand',
+                        'ResubmitOn',
+                        'CpuTimeBetRestartFile',
+                        'TimeBegin',
+                        'TimeMax',
                         'BoxSize',
                         'PeriodicBoundariesOn',
                         'ComovingIntegrationOn',
-                        'HubbleParam',
                         'Omega0',
                         'OmegaLambda',
+                        'HubbleParam',
                         # 'OmegaBaryon',
                         'BufferSize',
                         'PartAllocFactor',
@@ -316,6 +329,14 @@ def save_config(gadget_run):
     for option in parameter_options:
         field_name = parameter_name(option)
         field = getattr(gadget_run, field_name)
+        
+        # check for bool type
+        if type(field) == bool:
+            if field:
+                field = 1
+            else:
+                field = 0
+
         content += "{:<30}".format(option) + str(field) + '\n'
 
     fname = gadget_run.get_config_path()
