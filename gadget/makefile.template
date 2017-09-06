@@ -86,7 +86,9 @@ MPICHLIB =  -lmpich
 
 #--------------------------------------- Select target computer
 
-SYSTYPE="MPA"
+SYSTYPE="{systype:s}"
+#SYSTYPE="Geryon2"
+#SYSTYPE="MPA"
 #SYSTYPE="Mako"
 #SYSTYPE="Regatta"
 #SYSTYPE="RZG_LinuxCluster"
@@ -97,6 +99,19 @@ SYSTYPE="MPA"
 
 
 #--------------------------------------- Adjust settings for target computer
+
+ifeq ($(SYSTYPE),"Geryon2")
+CC       =  mpiicc
+OPTIMIZE =  -O3 -Wall
+GSL_INCL = -I/usr/local/gsl_intel/include/ 
+GSL_LIBS = -L/usr/local/gsl_intel/lib/
+FFTW_INCL= -I/usr/local/fftw2_intel/include/
+FFTW_LIBS= -L/usr/local/fftw2_intel/lib/
+MPICHLIB = 
+HDF5INCL =
+HDF5LIB  =
+endif
+
 
 ifeq ($(SYSTYPE),"MPA")
 CC       =  mpicc   

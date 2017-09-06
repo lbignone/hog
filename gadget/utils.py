@@ -274,7 +274,7 @@ def get_region_in_radius(snapshot, centre, radius, n_jobs=1):
     return ids.copy()
 
 
-def save_makefile(gadget_run, template='makefile.template'):
+def save_makefile(gadget_run, systype="Geryon2", template='makefile.template'):
 
     path = gadget_run.get_path()
     makedirs(path)
@@ -298,6 +298,8 @@ def save_makefile(gadget_run, template='makefile.template'):
                 value = value[1:]
         
         values[option] = value
+    
+    values['systype'] = systype
     
     content = content.format(**values)
 
