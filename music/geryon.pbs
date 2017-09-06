@@ -44,7 +44,7 @@ echo $OMP_NUM_THREADS
 {music_path:s} {music_conf:s}
 
 # move particles to bndry
-python $HOME/wmmmw/initial_conditions/move_to_bndry.py *.dat
+python $HOME/wmmw/initial_conditions/move_to_bndry.py *.dat
 
 # move output file to current folder
 mv $HOME/$PBS_JOBNAME.o${{PBS_JOBID%.geryon2}} .
