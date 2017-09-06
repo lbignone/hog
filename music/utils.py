@@ -188,7 +188,8 @@ def save_pbs_file(ic, template='geryon.pbs', ppn=8, walltime='72:00:00', music_p
         fout.write(template)
 
 
-def setup_run(ic, host='geryon2', template='geryon.pbs', ppn=8, walltime='72:00:00', music_path='/home/lbignone/wmmw/initial_conditions/MUSIC', media_path=settings.MEDIA_ROOT):
+def setup_run(ic, host='geryon2', template='geryon.pbs', ppn=8, walltime='72:00:00',
+              music_path='/home/lbignone/wmmw/initial_conditions/MUSIC', media_path=settings.MEDIA_ROOT):
     root = settings.MEDIA_ROOT
     region_point_file = ic.region.region_point_file
     region_point_file_strip = region_point_file[len(root):]
