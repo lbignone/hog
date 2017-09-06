@@ -129,10 +129,10 @@ def get_pygadget_sim(snapshot, is_IC=False):
 
     if not is_IC:
         simulation = snapshot.simulation
-        pot = simulation.pot
-        accel = simulation.accel
-        endt = simulation.endt
-        tstp = simulation.tstp
+        pot = simulation.OUTPUTPOTENTIAL
+        accel = simulation.OUTPUTACCELERATION
+        endt = simulation.OUTPUTCHANGEOFENTROPY
+        tstp = simulation.OUTPUTTIMESTEP
     else:
         pot = False
         accel = False
