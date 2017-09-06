@@ -278,7 +278,7 @@ class GadgetRun(GadgetSimulation):
     # SPH parameters
     DesNumNgb = models.IntegerField(default=64)
     MaxNumNgbDeviation = models.IntegerField(default=2)
-    ArtBulkViscCons = models.FloatField(default=1.0)
+    ArtBulkViscConst = models.FloatField(default=1.0)
     CourantFac = models.FloatField(default=0.15)
     InitGasTemp = models.FloatField(default=1e4)
     MinGasTemp = models.FloatField(default=20)

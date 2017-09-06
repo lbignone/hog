@@ -32,6 +32,7 @@ class Simulation(PolymorphicModel):
     location = models.CharField(max_length=200, blank=True)
     Omega_m = models.FloatField(blank=True, null=True)
     Omega_l = models.FloatField(blank=True, null=True)
+    Omega_b = models.FloatField(blank=True, null=True)
     h = models.FloatField(blank=True, null=True)
 
     ic = models.ForeignKey('core.Ic', on_delete=models.PROTECT,
