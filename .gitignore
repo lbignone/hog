@@ -5,3 +5,4 @@ gadget/migrations/
 rockstar/migrations/
 media/
 music/migrations/
+*-checkpoint.ipynb
