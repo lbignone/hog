@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #PBS -V
 
 #PBS -S /bin/bash
@@ -8,13 +10,13 @@
 
 #PBS -j oe
 
-#PBS -l nodes=1:ppn={ppn:d}
+#PBS -lnodes={nodes:d}:ppn={ppn:d}
 
 #PBS -l walltime={walltime:s}
 
 #
 
-##------------------------------------------------------------------------ 
+##------------------------------------------------------------------------
 
 ## La variable PBS_O_WORKDIR es una variable de entorno del PBS, indica
 
@@ -28,33 +30,28 @@ echo $PBS_O_WORKDIR
 
 #
 
-#
-
-#
+echo $PATH
 
 module purge
 
+module avail
+
 module load openmpi-1.10.4
-module load gsl_gnu
+module load intel
+module load fftw2_intel
+module load gsl_intel
 
-export OMP_NUM_THREADS={ppn:d}
+module list
 
-echo $OMP_NUM_THREADS
+rsync -ua Makefile Gadget-2.0.7/Gadget2/.
 
-{music_path:s} {music_conf:s}
+cd Gadget-2.0.7/Gadget2
 
-# move particles to bndry
-python $HOME/wmmmw/initial_conditions/move_to_bndry.py *.dat
+make
+
+cd -
+
+mpirun -n {processes:d} -ppn {ppn:d} Gadget-2.0.7/Gadget2/Gadget2 {gadget_conf:s}
 
 # move output file to current folder
 mv $HOME/$PBS_JOBNAME.o${{PBS_JOBID%.geryon2}} .
-
-# archive results
-rsync -avzh --update ../../music/* /data4/lbignone/hog/media/music/.
-rsync -avzh --update ../../regions/* /data4/lbignone/hog/media/regions/.
-
-# delete all output
-rm *.dat
-rm wnoise*
-rm *.txt
-rm *.o*

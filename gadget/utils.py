@@ -2,6 +2,8 @@ from scipy.spatial.ckdtree import cKDTree
 from gadget import pygadget
 from django.db import models
 from core.utils import makedirs
+from core.rsync import rsync
+from hog import settings
 import os
 
 
@@ -344,7 +346,7 @@ def save_config(gadget_run):
         f.write(content)
 
 
-def save_pbs_file(gadget_run, template='geryon.pbs', nodes=1, ppn=40, walltime='72:00:00'):
+def save_pbs_file(gadget_run, template='geryon.pbs', nodes=2, ppn=40, walltime='72:00:00'):
 
     path = gadget_run.get_path()
     fname = gadget_run.get_config_path()
@@ -359,12 +361,22 @@ def save_pbs_file(gadget_run, template='geryon.pbs', nodes=1, ppn=40, walltime='
     with open(template_path, 'r') as f_template:
         template = f_template.read()
     
+    processes = nodes * ppn
+
     template = template.format(name=name,
                                nodes=nodes,
                                ppn=ppn,
+                               processes=processes,
                                walltime=walltime,
                                gadget_conf=gadget_conf,
                                )
 
     with open(fpbs, 'w') as fout:
         fout.write(template)
+
+
+def transfer_to_host(gadget_run, host='geryon2', media_path='/fast_scratch1/lbignone/hog/media/'):
+    root = settings.MEDIA_ROOT
+    conf_path = gadget_run.get_path()
+    conf_path_strip = conf_path[len(root):]
+    rsync(conf_path, host + ':' + media_path + conf_path_strip)
