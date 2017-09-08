@@ -334,6 +334,8 @@ class MusicGadgetIc(GadgetIc, MusicIc):
 
     gadget_spreadcoarse = models.BooleanField(blank=False, default=False)
 
+    post_action = models.TextField(blank=True, default='$HOME/wmmw/initial_conditions/move_to_bndry.py *.dat')
+
     gadget_longids_help = """Use 64bit integers for particle IDs. Default if
     the parameter is not given is 32bit if less than 2^32 particles, 64bit if
     more"""

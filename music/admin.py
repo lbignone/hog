@@ -16,7 +16,7 @@ class SeedInline(admin.TabularInline):
     extra = 1
 
 
-fieldsets = [(None, {'fields': ['name', 'category']}),
+fieldsets = [(None, {'fields': ['name', 'category', 'post_action']}),
              ('Setup', {'fields': ['boxlength',
                                    'zstart',
                                    'region',
@@ -117,6 +117,7 @@ class IcAdmin(admin.ModelAdmin):
                     'gadget_coarsetype',
                     'gadget_spreadcoarse',
                     'gadget_longids',
+                    'post_action',
                     )
     list_filter = ('category', 'baryons', 'levelmin', 'levelmax', 'region')
     search_fields = ['name', 'id']
