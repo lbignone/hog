@@ -10,6 +10,10 @@ def save_config_file(modeladmin, request, queryset):
     for obj in queryset:
         save_config_file(obj)
 
+def copy_ic(modeladmin, request, queryset):
+    from .utils import create_ic_from_existing
+    for obj in queryset:
+        create_ic_from_existing(obj)
 
 class SeedInline(admin.TabularInline):
     model = Seed
@@ -69,7 +73,7 @@ class IcAdmin(admin.ModelAdmin):
     raw_id_fields = ("region",)
     fk1 = easy.ForeignKeyAdminField('region')
 
-    actions = [save_config_file, ]
+    actions = [save_config_file, copy_ic, ]
 
     fieldsets += gadget_fieldsets
 
