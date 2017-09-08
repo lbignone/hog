@@ -36,10 +36,7 @@ module purge
 
 module avail
 
-module load openmpi-1.10.4
-module load intel
-module load fftw2_intel
-module load gsl_intel
+{module_load_list:s}
 
 module list
 

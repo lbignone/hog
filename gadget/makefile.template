@@ -100,7 +100,7 @@ SYSTYPE="{systype:s}"
 
 #--------------------------------------- Adjust settings for target computer
 
-ifeq ($(SYSTYPE),"Geryon2")
+ifeq ($(SYSTYPE),"Geryon2_intel")
 CC       =  mpiicc
 OPTIMIZE =  -O3 -Wall
 GSL_INCL = -I/usr/local/gsl_intel/include/ 
@@ -112,6 +112,17 @@ HDF5INCL =
 HDF5LIB  =
 endif
 
+ifeq ($(SYSTYPE),"Geryon2_gnu")
+CC       =  mpicc
+OPTIMIZE =  -O3 -Wall
+GSL_INCL = -I/usr/local/gsl_gnu/include/ 
+GSL_LIBS = -L/usr/local/gsl_gnu/lib/
+FFTW_INCL= -I/usr/local/fftw2_gnu/include/
+FFTW_LIBS= -L/usr/local/fftw2_gnu/lib/
+MPICHLIB = 
+HDF5INCL =
+HDF5LIB  =
+endif
 
 ifeq ($(SYSTYPE),"MPA")
 CC       =  mpicc   

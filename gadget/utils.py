@@ -290,7 +290,7 @@ def get_region_in_radius(snapshot, centre, radius, n_jobs=1):
     return ids.copy()
 
 
-def save_makefile(gadget_run, systype="Geryon2", template='makefile.template'):
+def save_makefile(gadget_run, systype="Geryon2_gnu", template='makefile.template'):
 
     path = gadget_run.get_path()
     makedirs(path)
@@ -347,7 +347,8 @@ def save_config(gadget_run):
         f.write(content)
 
 
-def save_pbs_file(gadget_run, template='geryon.pbs', nodes=2, ppn=40, walltime='72:00:00'):
+def save_pbs_file(gadget_run, template='geryon.pbs', nodes=2, ppn=40, walltime='72:00:00',
+                  module_load_list='gnu'):
 
     path = gadget_run.get_path()
     fname = gadget_run.get_config_path()
@@ -361,7 +362,17 @@ def save_pbs_file(gadget_run, template='geryon.pbs', nodes=2, ppn=40, walltime='
 
     with open(template_path, 'r') as f_template:
         template = f_template.read()
-    
+
+    intel_load_list = "openmpi-1.10.4 intel fftw2_intel gsl_intel"
+
+    gnu_load_list = "module load openmpi-1.10.4 gsl_gnu fftw_gnu fftw2_gnu"
+
+    if module_load_list == 'intel':
+        module_load_list = intel_load_list
+    elif module_load_list == 'gnu':
+        module_load_list = gnu_load_list
+        
+      
     processes = nodes * ppn
 
     template = template.format(name=name,
@@ -370,6 +381,7 @@ def save_pbs_file(gadget_run, template='geryon.pbs', nodes=2, ppn=40, walltime='
                                processes=processes,
                                walltime=walltime,
                                gadget_conf=gadget_conf,
+                               module_load_list=module_load_list,
                                )
 
     with open(fpbs, 'w') as fout:
