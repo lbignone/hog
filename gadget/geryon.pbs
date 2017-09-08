@@ -51,7 +51,7 @@ make
 
 cd -
 
-mpirun -n {processes:d} -ppn {ppn:d} Gadget-2.0.7/Gadget2/Gadget2 {gadget_conf:s}
+mpirun -n {processes:d} Gadget-2.0.7/Gadget2/Gadget2 {gadget_conf:s}
 
 # move output file to current folder
 mv $HOME/$PBS_JOBNAME.o${{PBS_JOBID%.geryon2}} .
