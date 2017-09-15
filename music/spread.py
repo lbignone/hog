@@ -20,6 +20,7 @@ types_n = len(particle_keys)
 def main(fname):
 
     fname2 = fname.split('.')[0] + '_spread.' + fname.split('.')[1]
+    # fname2 = fname.split('.')[0] + '.' + fname.split('.')[1]
 
     snap = Simulation(fname, skip_file_check=True)
 
@@ -32,11 +33,11 @@ def main(fname):
     n = g.size().values
 
     snap.particle_numbers['disk'] = n[0]
-    snap.particle_numbers['buldge'] = n[1] + n[2]
-    snap.particle_numbers['bndry'] = n[3]
+    snap.particle_numbers['buldge'] = n[1:-1].sum()
+    snap.particle_numbers['bndry'] = n[-1]
 
     snap.particle_mass['disk'] = mass_values[0]
-    snap.particle_mass['bndry'] = mass_values[3]
+    snap.particle_mass['bndry'] = mass_values[-1]
 
     n_block_mass = 4
 
@@ -56,10 +57,10 @@ def main(fname):
 
                 if i == n_block_mass:
                     skip = (n[0])*4
-                    lim = (n[0] + n[1] + n[2])*4
+                    lim = (n[0:-1].sum())*4
                     data = data[skip:lim]
 
-                    assert len(data) == n[1:3].sum()*4
+                    assert len(data) == n[1:-1].sum()*4
 
                     block_size = pack('I', len(data))
                     block_size2 = block_size
