@@ -36,6 +36,7 @@ module purge
 
 module load openmpi-1.10.4
 module load gsl_gnu
+module load fftw3_gnu
 
 export OMP_NUM_THREADS={ppn:d}
 
@@ -54,11 +55,11 @@ echo $OMP_NUM_THREADS
 mv $HOME/$PBS_JOBNAME.o${{PBS_JOBID%.geryon2}} .
 
 # remove wnoise files
-rm wnoise_*.bin
+rm wnoise*.bin
 
 # archive results
-rsync -avzh --update ../../music/* /data4/lbignone/hog/media/music/.
-rsync -avzh --update ../../regions/* /data4/lbignone/hog/media/regions/.
+rsync -avzh --update ../../music/* /data5/lbignone/hog/media/music/.
+rsync -avzh --update ../../regions/* /data5/lbignone/hog/media/regions/.
 
 # delete all output
 rm *.dat
