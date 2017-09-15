@@ -365,7 +365,7 @@ def save_pbs_file(gadget_run, template='geryon.pbs', nodes=2, ppn=40, walltime='
 
     intel_load_list = "openmpi-1.10.4 intel fftw2_intel gsl_intel"
 
-    gnu_load_list = "module load openmpi-1.10.4 gsl_gnu fftw_gnu fftw2_gnu"
+    gnu_load_list = "module load openmpi-1.10.4 gsl_gnu fftw2_gnu"
 
     if module_load_list == 'intel':
         module_load_list = intel_load_list
