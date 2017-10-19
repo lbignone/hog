@@ -16,6 +16,7 @@ def import_from_fname(modeladmin, request, queryset):
 
 class GadgetSimulationAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'name',
         'location',
         'snapshot_file_base',
@@ -126,6 +127,9 @@ class GadgetRunAdmin(GadgetSimulationAdmin):
                                          'metals',
                                          'entr_ics']}),
                 ]
+
+    list_filter = ('category', )
+    search_fields = ['name', 'id']
 
 
 class GadgetSnapshotAdmin(admin.ModelAdmin):
