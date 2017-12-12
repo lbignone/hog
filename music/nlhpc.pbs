@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --job-name={name:s}
+#SBATCH --partition=slims
+#SBATCH -n {processes:d} # Debe de ser un número múltiplo de 20
+#SBATCH --ntasks-per-node={ppn:d} # Con esto se fuerza a que se lancen 20 tareas MPI en cada uno de los nodos, ocupando de este modo nodos completos. En este caso 6 nodos completos
+#SBATCH --output=example_%j.out
+#SBATCH --error=example_%j.err
+#SBATCH --mail-user=l.bignone@uandresbello.edu
+#SBATCH --mail-type=ALL
+
+module load openmpi
+module load gsl
+module load fftw/3.3.4
+
+export OMP_NUM_THREADS={ppn:d}
+
+{music_path:s} {music_conf:s}
+
+# post ic action
+# examples 
+# python $HOME/wmmw/initial_conditions/move_to_bndry.py *.dat
+# python $HOME/wmmw/initial_conditions/spread.py *.dat
+
+{post_action:s}
+

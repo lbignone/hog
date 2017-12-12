@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --job-name={name:s}
+#SBATCH --partition=slims
+#SBATCH -n {processes:d} # Debe de ser un número múltiplo de 20
+#SBATCH --ntasks-per-node={ppn:d} # Con esto se fuerza a que se lancen 20 tareas MPI en cada uno de los nodos, ocupando de este modo nodos completos. En este caso 6 nodos completos
+#SBATCH --output=example_%j.out
+#SBATCH --error=example_%j.err
+#SBATCH --mail-user=l.bignone@uandresbello.edu
+#SBATCH --mail-type=ALL
+
+{module_load_list:s}
+
+rsync -ua Makefile Gadget-2.0.7/Gadget2/.
+
+cd Gadget-2.0.7/Gadget2
+
+make
+
+cd -
+
+srun Gadget-2.0.7/Gadget2/Gadget2 {gadget_conf:s}

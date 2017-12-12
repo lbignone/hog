@@ -124,6 +124,18 @@ HDF5INCL =
 HDF5LIB  =
 endif
 
+ifeq ($(SYSTYPE),"NLHPC_intel")
+CC       =  mpiicc
+OPTIMIZE =  -O3 -Wall
+GSL_INCL = -I/home/apps/lib/gsl/2.1/include/
+GSL_LIBS = -L/home/apps/lib/gsl/2.1/lib/
+FFTW_INCL= -I/home/opt/leftraru/software/MPI/intel/2017.1.132-GCC-6.3.0-2.27/impi/2017.1.132/FFTW/2.1.5/include/
+FFTW_LIBS= -L/home/opt/leftraru/software/MPI/intel/2017.1.132-GCC-6.3.0-2.27/impi/2017.1.132/FFTW/2.1.5/lib/
+MPICHLIB = 
+HDF5INCL =
+HDF5LIB  =
+endif
+
 ifeq ($(SYSTYPE),"MPA")
 CC       =  mpicc   
 OPTIMIZE =  -O3 -Wall

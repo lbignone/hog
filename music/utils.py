@@ -167,7 +167,7 @@ def transfer_to_host(ic, host='geryon2', media_path='/fast_scratch1/lbignone/hog
     rsync(region_path, host + ':' + media_path + region_path_strip)
 
 
-def save_pbs_file(ic, template='geryon.pbs', ppn=8, walltime='72:00:00',
+def save_pbs_file(ic, template='geryon.pbs', nodes=1, ppn=8, walltime='72:00:00',
                   music_path='/home/lbignone/wmmw/codes/ohahn-music-b3803b37a3ce'):
 
     path = ic.get_path()
@@ -182,8 +182,15 @@ def save_pbs_file(ic, template='geryon.pbs', ppn=8, walltime='72:00:00',
 
     with open(template_path, 'r') as f_template:
         template = f_template.read()
+
+    processes = nodes * ppn
     
-    template = template.format(name=name, ppn=ppn, walltime=walltime, music_conf=music_conf,
+    template = template.format(name=name,
+                               nodes=nodes,
+                               ppn=ppn,
+                               processes=processes,
+                               walltime=walltime,
+                               music_conf=music_conf,
                                music_path=music_path,
                                post_action=ic.post_action,
                                )
@@ -192,7 +199,7 @@ def save_pbs_file(ic, template='geryon.pbs', ppn=8, walltime='72:00:00',
         fout.write(template)
 
 
-def setup_run(ic, host='geryon2', template='geryon.pbs', ppn=8, walltime='72:00:00',
+def setup_run(ic, host='geryon2', template='geryon.pbs', nodes=1, ppn=8, walltime='72:00:00',
               music_path='/home/lbignone/wmmw/codes/music/initial_conditions/MUSIC', media_path=settings.MEDIA_ROOT,):
     root = settings.MEDIA_ROOT
     region_point_file = ic.region.region_point_file
@@ -206,7 +213,7 @@ def setup_run(ic, host='geryon2', template='geryon.pbs', ppn=8, walltime='72:00:
     # restore location point_filename
     ic.region._point_filename = None
 
-    save_pbs_file(ic, template=template, ppn=ppn, walltime=walltime, music_path=music_path)
+    save_pbs_file(ic, template=template, nodes=nodes, ppn=ppn, walltime=walltime, music_path=music_path)
     transfer_to_host(ic, host=host, media_path=media_path)
 
 
