@@ -1,6 +1,6 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
-from .models import EllipsoidRegion, Structure, BoxRegion, Category
+from .models import EllipsoidRegion, Structure, BoxRegion, Category, Ic
 import easy
 import numpy as np
 
@@ -69,5 +69,6 @@ class StructureRegionAdmin(admin.ModelAdmin):
 
 admin.site.register(EllipsoidRegion, EllipsoidRegionAdmin)
 admin.site.register(BoxRegion)
+admin.site.register(Ic)
 admin.site.register(Structure, StructureRegionAdmin)
 admin.site.register(Category, DraggableMPTTAdmin)

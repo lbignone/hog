@@ -3,6 +3,8 @@ from django.contrib import admin
 from .models import GadgetSimulation, GadgetRun, GadgetSnapshot, GadgetIc
 from .utils import makefile_options
 
+import easy
+
 
 def import_from_location(modeladmin, request, queryset):
     for obj in queryset:
@@ -52,9 +54,14 @@ class GadgetSimulationAdmin(admin.ModelAdmin):
 
 
 class GadgetRunAdmin(GadgetSimulationAdmin):
+
+    raw_id_fields = ("ic",)
+    fk1 = easy.ForeignKeyAdminField('ic')
+
     fieldsets = [(None, {'fields': ['name',
                                     'category',
-                                    'ic',]}),
+                                    'ic',
+                                    ]}),
                  ('MAKEFILE options', {'fields': makefile_options}),
                  ('Filenames and file formats', {'fields': ['OutputDir',
                                                            'SnapFormat',
@@ -127,6 +134,7 @@ class GadgetRunAdmin(GadgetSimulationAdmin):
                                          'metals',
                                          'entr_ics']}),
                 ]
+
 
     list_filter = ('category', )
     search_fields = ['name', 'id']
