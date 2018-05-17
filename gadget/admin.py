@@ -42,11 +42,11 @@ class GadgetSimulationAdmin(admin.ModelAdmin):
         'OUTPUTCHANGEOFENTROPY',
         'OUTPUTTIMESTEP',
 
-        'sfr',
+        'SFR',
         'feedback',
-        'cooling',
-        'stellar_age',
-        'metals',
+        'COOLING',
+        'STELLARAGE',
+        'METALS',
         'entr_ics',
     )
 
@@ -128,10 +128,7 @@ class GadgetRunAdmin(GadgetSimulationAdmin):
                                                          'SofteningBulgeMaxPhys',
                                                          'SofteningStarsMaxPhys',
                                                          'SofteningBndryMaxPhys',]}),
-                  ('Others', {'fields': ['sfr',
-                                         'feedback',
-                                         'cooling',
-                                         'metals',
+                  ('Others', {'fields': ['feedback',
                                          'entr_ics']}),
                 ]
 
@@ -214,10 +211,7 @@ class Gadget3RunAdmin(GadgetRunAdmin):
                                                          'SofteningBulgeMaxPhys',
                                                          'SofteningStarsMaxPhys',
                                                          'SofteningBndryMaxPhys',]}),
-                  ('Others', {'fields': ['sfr',
-                                         'feedback',
-                                         'cooling',
-                                         'metals',
+                  ('Others', {'fields': ['feedback',
                                          'entr_ics']}),
                   ('More parameterfile options', {'fields': ['CoolingOn',
                                                              'StarformationOn',

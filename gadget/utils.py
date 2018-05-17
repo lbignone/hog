@@ -12,6 +12,10 @@ module_dir = os.path.dirname(__file__)
 
 makefile_options = ['PERIODIC',
                     'UNEQUALSOFTENINGS',
+                    'SFR',
+                    'COOLING',
+                    'METALS',
+                    'STELLARAGE',
                     'PEANOHILBERT',
                     'WALLCLOCK',
                     'PMGRID',
@@ -21,6 +25,7 @@ makefile_options = ['PERIODIC',
                     'RCUT',
                     'DOUBLEPRECISION',
                     'DOUBLEPRECISION_FFTW',
+                    'NOTYPEPREFIX_FFTW',
                     'SYNCHRONIZATION',
                     'FLEXSTEPS',
                     'PSEUDOSYMMETRIC',
@@ -33,25 +38,27 @@ makefile_options = ['PERIODIC',
                     'OUTPUTTIMESTEP',
                     'LONGIDS',]
 
-new_makefile_options = makefile_options + ['WENDLAND_C4_KERNEL',
-                                               'WC4_BIAS_CORRECTION',
-                                               'MYSORT',
-                                               'MOREPARAMS',
-                                               'NO_ISEND_IRECV_IN_DOMAIN',
-                                               'NO_ISEND_IRECV_IN_PM',
-                                               'FIX_PATHSCALE_MPI_STATUS_IGNORE_BUG',
-                                               'TIME_DEP_ART_VISC',
-                                               'AB_ART_VISC',
-                                               'ARTIFICIAL_CONDUCTIVITY',
-                                               'TIME_DEP_ART_COND',
-                                               'AB_COND_GRAVITY',
-                                               'WAKEUP',
-                                               'CS_MODEL',
-                                               'CS_FEEDBACK',
-                                               'CS_SNI',
-                                               'CS_SNII',
-                                               'CS_ENRICH',
-                                               'CS_TESTS',]
+new_makefile_options = makefile_options + ['MULTIPLEDOMAINS',
+                                           'TOPNODEFACTOR',  
+                                           'WENDLAND_C4_KERNEL',
+                                           'WC4_BIAS_CORRECTION',
+                                           'MYSORT',
+                                           'MOREPARAMS',
+                                           'NO_ISEND_IRECV_IN_DOMAIN',
+                                           'NO_ISEND_IRECV_IN_PM',
+                                           'FIX_PATHSCALE_MPI_STATUS_IGNORE_BUG',
+                                           'TIME_DEP_ART_VISC',
+                                           'AB_ART_VISC',
+                                           'ARTIFICIAL_CONDUCTIVITY',
+                                           'TIME_DEP_ART_COND',
+                                           'AB_COND_GRAVITY',
+                                           'WAKEUP',
+                                           'CS_MODEL',
+                                           'CS_FEEDBACK',
+                                           'CS_SNI',
+                                           'CS_SNII',
+                                           'CS_ENRICH',
+                                           'CS_TESTS',]
 
 parameter_options = [
                         'OutputDir',
@@ -120,6 +127,42 @@ parameter_options = [
                         'SofteningStarsMaxPhys',
                         'SofteningBndryMaxPhys',
                     ]
+
+new_parameter_options = parameter_options + ['CoolingOn',
+                                             'StarformationOn',
+                                             'FactorSFR',
+                                             'CritOverDensity',
+                                             'CritPhysDensity',
+                                             'DecouplingParam',
+                                             'TlifeSNII',
+                                             'Raiteri_TlifeSNII',
+                                             'MinTlifeSNI',
+                                             'MaxTlifeSNI',
+                                             'RateSNI',
+                                             'SN_Energy_cgs',
+                                             'Tcrit_Phase',
+                                             'DensFrac_Phase',
+                                             'SN_Energy_frac_cold',
+                                             'MaxHotHsmlParam',
+                                             'InitialHotHsmlFactor',
+                                             'MaxNumHotNgbDeviation',
+                                             'MaxSfrTimescale',
+                                             'TempSupernova',
+                                             'TempClouds',
+                                             'FactorSN',
+                                             'FactorEVP',
+                                             'WindEfficiency',
+                                             'WindFreeTravelLength',
+                                             'WindEnergyFraction',
+                                             'WindFreeTravelDensFac',
+                                             'TimebinFile',
+                                             'MaxMemSize',
+                                             'ArtCondConstant',
+                                             'ArtCondMin',
+                                             'ViscositySourceScaling',
+                                             'ViscosityDecayLength',
+                                             'ViscosityAlphaMin',
+                                             ]
 
 
 def parameter_name(parameter):
@@ -388,12 +431,18 @@ def save_makefile(gadget_run, systype="Geryon2_gnu", template='Config.sh.templat
         f.write(content)
 
 
-def save_config(gadget_run):
+def save_config(gadget_run, isGadget3=False):
+
+    if isGadget3:
+        options = new_parameter_options
+    else:
+        options = parameter_options
+
     path = gadget_run.get_path()
     makedirs(path)
 
     content = ''
-    for option in parameter_options:
+    for option in options:
         field_name = parameter_name(option)
         field = getattr(gadget_run, field_name)
         

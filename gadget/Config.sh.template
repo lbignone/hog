@@ -6,8 +6,8 @@
 
 #--------------------------------------- Basic operation mode of code
 {PERIODIC:s}
-#COOLING
-#SFR
+{COOLING:s}
+{SFR:s}
 #SINKS
 {UNEQUALSOFTENINGS:s}
 #NUM_THREADS=4              # Now OpenMP works the same, so don't compile with OpenMP *and* PTHREADS !
@@ -33,8 +33,8 @@
 
 
 #--------------------------------------- Multi-Domain and Top-Level Tree options
-#MULTIPLEDOMAINS=4
-#TOPNODEFACTOR=3.0
+{MULTIPLEDOMAINS:s}
+{TOPNODEFACTOR:s}
 #KD_HMAX_ESTIMATE           # Alternative way to update HMAX within Tree nodes
 
 #--------------------------------------- Things that are always recommended
@@ -127,8 +127,8 @@
 #GENERATIONS=1           # the number of stars a gas particle may spawn
 #SOFTEREQS
 {MOREPARAMS:s}
-#METALS
-#STELLARAGE
+{METALS:s}
+{STELLARAGE:s}
 #WINDS
 #VARIABLE_WINDS
 #QUICK_LYALPHA
@@ -189,7 +189,7 @@
 #LT_DF_BH_BHAR_SWITCH=4 	# switch feedback by BHAR
 
 #-------------------------------------- Viscous gas treatment 
-#NAVIERSTOKES            # Braginskii-Spitzer parametrization of the shear viscosity: mu = f x T^{5/2}
+#NAVIERSTOKES            # Braginskii-Spitzer parametrization of the shear viscosity: mu = f x T^(5/2)
 #NAVIERSTOKES_CONSTANT   # Shear viscosity set constant for all gas particles
 #NAVIERSTOKES_BULK       # Bulk viscosity set constant for all gas particles. To run with bulk visocity only one has to set shear viscosity to zero in the parameterfile.
 #VISCOSITY_SATURATION    # Both shear and bulk viscosities are saturated, so that unphysical accelerations and entropy increases are avoided. Relevant for the cosmological simulations.
@@ -216,12 +216,12 @@
 #NOTREEINRESTARTFILE               # tree is not saved in the restart file, a new domain decomposition is done when restarting
 #MPISENDRECV_SIZELIMIT=100
 #MPISENDRECV_CHECKSUM
-NOGRAVITY
+#NOGRAVITY
 #NOACCEL
 #NOISMPRESSURE
 #NOVISCOSITYLIMITER
 #NOTREERND
-#NOTYPEPREFIX_FFTW
+{NOTYPEPREFIX_FFTW:s}
 #ISOTHERM=200                  # adds potential of an isothermal sphere
 #COMPUTE_POTENTIAL_ENERGY
 #ALLOWEXTRAPARAMS
@@ -229,9 +229,9 @@ NOGRAVITY
 #ENLARGE_DYNAMIC_RANGE_IN_TIME  # NOT TESTED !!!
 #ASSIGN_NEW_IDS
 #INHOMOG_GASDISTR_HINT         # if the gas is distributed very different from collisionless particles, this can helps to avoid problems in the domain decomposition
-LONG_X=32
-LONG_Y=32
-LONG_Z=1
+#LONG_X=32
+#LONG_Y=32
+#LONG_Z=1
 #SPH_BND_PARTICLES
 #NEW_RATES                     # switches in updated cooling rates from Naoki
 #RADIATIVE_RATES               # used in non-equilibrium chemistry model

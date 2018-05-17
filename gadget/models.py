@@ -34,17 +34,17 @@ class GadgetSimulation(Simulation):
     mass_stars = models.FloatField(blank=True, null=True)
     mass_bndry = models.FloatField(blank=True, null=True)
 
-    sfr = models.BooleanField(default=False)
+    SFR = models.BooleanField(default=False)
 
     feedback = models.BooleanField(default=False)
 
-    cooling = models.BooleanField(default=False)
+    COOLING = models.BooleanField(default=False)
 
     boxlength = models.FloatField(blank=True, null=True, default=10000.0)
 
-    stellar_age = models.BooleanField(default=False)
+    STELLARAGE = models.BooleanField(default=False)
 
-    metals = models.BooleanField(default=False)
+    METALS = models.BooleanField(default=False)
 
     entr_ics = models.BooleanField(default=False)
 
@@ -192,6 +192,7 @@ class GadgetRun(GadgetSimulation):
     # Single/double precision
     DOUBLEPRECISION = models.BooleanField(default=False)
     DOUBLEPRECISION_FFTW = models.BooleanField(default=False)
+    NOTYPEPREFIX_FFTW = models.BooleanField(default=False)
 
     # Time integration options
     SYNCHRONIZATION = models.BooleanField(default=True)
@@ -317,8 +318,10 @@ class GadgetRun(GadgetSimulation):
 
 
 class Gadget3Run(GadgetRun):
-
     # Makefile options
+
+    MULTIPLEDOMAINS = models.FloatField(default=8)
+    TOPNODEFACTOR = models.FloatField(default=2)
 
     # Kernel
     WENDLAND_C4_KERNEL = models.BooleanField(default=True)
