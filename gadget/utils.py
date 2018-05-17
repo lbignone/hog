@@ -33,6 +33,26 @@ makefile_options = ['PERIODIC',
                     'OUTPUTTIMESTEP',
                     'LONGIDS',]
 
+new_makefile_options = makefile_options + ['WENDLAND_C4_KERNEL',
+                                               'WC4_BIAS_CORRECTION',
+                                               'MYSORT',
+                                               'MOREPARAMS',
+                                               'NO_ISEND_IRECV_IN_DOMAIN',
+                                               'NO_ISEND_IRECV_IN_PM',
+                                               'FIX_PATHSCALE_MPI_STATUS_IGNORE_BUG',
+                                               'TIME_DEP_ART_VISC',
+                                               'AB_ART_VISC',
+                                               'ARTIFICIAL_CONDUCTIVITY',
+                                               'TIME_DEP_ART_COND',
+                                               'AB_COND_GRAVITY',
+                                               'WAKEUP',
+                                               'CS_MODEL',
+                                               'CS_FEEDBACK',
+                                               'CS_SNI',
+                                               'CS_SNII',
+                                               'CS_ENRICH',
+                                               'CS_TESTS',]
+
 parameter_options = [
                         'OutputDir',
                         'SnapFormat',
@@ -320,6 +340,50 @@ def save_makefile(gadget_run, systype="Geryon2_gnu", template='makefile.template
     content = content.format(**values)
 
     fname = gadget_run.get_makefile_path()
+    with open(fname, 'w') as f:
+        f.write(content)
+
+
+def save_makefile(gadget_run, systype="Geryon2_gnu", template='Config.sh.template', systype_template='Makefile.systype.template'):
+
+    path = gadget_run.get_path()
+    makedirs(path)
+
+    template_path = os.path.join(module_dir, template)
+    systype_template_path = os.path.join(module_dir, systype_template)
+
+    with open(template_path, 'r') as f:
+        content = f.read()
+
+    values = {}
+    for option in new_makefile_options:
+        field = getattr(gadget_run, option)
+        
+        value = '#' + option
+        
+        if field is not None:
+        
+            if type(field) != bool:
+                value += '=' + str(field)
+            if field:
+                value = value[1:]
+        
+        values[option] = value
+   
+    content = content.format(**values)
+
+    fname = gadget_run.get_makefile_path()
+    with open(fname, 'w') as f:
+        f.write(content)
+
+    # write systype
+
+    with open(systype_template_path, 'r') as f:
+        content = f.read()
+
+    content = content.format(systype=systype)
+
+    fname = gadget_run.get_systype_path()
     with open(fname, 'w') as f:
         f.write(content)
 

@@ -316,6 +316,93 @@ class GadgetRun(GadgetSimulation):
         return fname.format(id=self.id, name=self.name)
 
 
+class Gadget3Run(GadgetRun):
+
+    # Makefile options
+
+    # Kernel
+    WENDLAND_C4_KERNEL = models.BooleanField(default=True)
+    WC4_BIAS_CORRECTION = models.BooleanField(default=True)
+
+    MYSORT = models.BooleanField(default=True)
+    MOREPARAMS = models.BooleanField(default=True)
+    
+    NO_ISEND_IRECV_IN_DOMAIN = models.BooleanField(default=False)
+    NO_ISEND_IRECV_IN_PM = models.BooleanField(default=False)
+    FIX_PATHSCALE_MPI_STATUS_IGNORE_BUG = models.BooleanField(default=False)
+
+    # Artificial Viscosity
+    TIME_DEP_ART_VISC = models.BooleanField(default=True)
+    AB_ART_VISC = models.FloatField(default=4.0)
+
+    # Artificial Conductiviy
+    ARTIFICIAL_CONDUCTIVITY = models.BooleanField(default=True)
+    TIME_DEP_ART_COND = models.FloatField(default=1.0)
+    AB_COND_GRAVITY = models.FloatField(default=5.0)
+
+    # Timestep options
+    WAKEUP = models.FloatField(default=4.0)
+
+    # Cecilia 's model
+    CS_MODEL = models.BooleanField(default=True)      
+    CS_FEEDBACK = models.BooleanField(default=True)
+    CS_SNI = models.BooleanField(default=True)
+    CS_SNII = models.BooleanField(default=True)
+    CS_ENRICH = models.BooleanField(default=True)
+    CS_TESTS = models.BooleanField(default=False)
+
+    # More parameterfile options
+    CoolingOn = models.BooleanField(default=False)
+    StarformationOn = models.BooleanField(default=False)
+    FactorSFR = models.FloatField(default=0.1)
+    CritOverDensity = models.FloatField(default=57.7)
+    CritPhysDensity = models.FloatField(default=0.318)
+    DecouplingParam = models.FloatField(default=50)                   
+    TlifeSNII = models.FloatField(default=0)
+    Raiteri_TlifeSNII = models.FloatField(default=1)
+    MinTlifeSNI = models.FloatField(default=1e8)
+    MaxTlifeSNI = models.FloatField(default=1.1e9)
+    RateSNI = models.FloatField(default=0.0015)
+    SN_Energy_cgs = models.FloatField(default=7e50)
+    Tcrit_Phase = models.FloatField(default=80000)
+    DensFrac_Phase = models.FloatField(default=0.1)
+    SN_Energy_frac_cold = models.FloatField(default=0.5)
+    MaxHotHsmlParam = models.FloatField(default=10)
+    InitialHotHsmlFactor  = models.FloatField(default=5)
+    MaxNumHotNgbDeviation = models.FloatField(default=10)
+    MaxSfrTimescale = models.FloatField(default=1.5)
+    TempSupernova = models.FloatField(default=1e8)
+    TempClouds = models.FloatField(default=1000)
+    FactorSN = models.FloatField(default=0.1)
+    FactorEVP = models.FloatField(default=1000)
+    WindEfficiency = models.FloatField(default=2)
+    WindFreeTravelLength = models.FloatField(default=20)
+    WindEnergyFraction = models.FloatField(default=1)
+    WindFreeTravelDensFac = models.FloatField(default=0.1)
+
+    # Other parameters
+    TimebinFile = models.CharField(max_length=200, default='timebins.txt')
+    MaxMemSize = models.FloatField(default=3500)
+    
+    # Artificial Conductivity
+    ArtCondConstant = models.FloatField(default=1.0)
+    ArtCondMin = models.FloatField(default=0.0)
+
+    # Artificial Viscosity
+    ViscositySourceScaling = models.FloatField(default=0.0)
+    ViscosityDecayLength = models.FloatField(default=4.0)
+    ViscosityAlphaMin = models.FloatField(default=0.025)
+
+    def get_makefile_path(self):
+        path = self.get_path()
+        fname = path + 'Config.sh'
+        return fname
+
+    def get_systype_path(self):
+        path = self.get_path()
+        fname = path + 'Makefile.systype'
+        return fname
+
 class GadgetSnapshot(Snapshot):
 
     n_gas = models.IntegerField()
