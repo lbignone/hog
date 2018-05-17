@@ -164,6 +164,9 @@ new_parameter_options = parameter_options + ['CoolingOn',
                                              'ViscosityAlphaMin',
                                              ]
 
+# remove TreeAllocFactor from new_parameter_options because it does not seem to work ok with the new code
+new_parameter_options.remove('TreeAllocFactor')
+
 
 def parameter_name(parameter):
     new_names = {'SnapshotFileBase': 'snapshot_file_base',
