@@ -1,0 +1,6 @@
+{music_path:s} {music_conf:s}
+
+python /media/data1/lbignone/geryon2/home/wmmw/initial_conditions/spread.py *.dat
+
+rm wnoise*
+rm *.txt
