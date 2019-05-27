@@ -128,9 +128,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-NOTEBOOK_ARGUMENTS = [
-    '--notebook-dir', 'notebooks',
-]
+# NOTEBOOK_ARGUMENTS = [
+#    '--notebook-dir', 'notebooks',
+# ]
 
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': '/home/lbignone/backups/hog'}

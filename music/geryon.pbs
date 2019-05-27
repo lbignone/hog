@@ -8,7 +8,7 @@
 
 #PBS -j oe
 
-#PBS -l nodes=1:ppn={ppn:d}
+#PBS -l nodes=1:ppn=1
 
 #PBS -l walltime={walltime:s}
 
@@ -44,25 +44,4 @@ echo $OMP_NUM_THREADS
 
 {music_path:s} {music_conf:s}
 
-# post ic action
-# examples 
-# python $HOME/wmmw/initial_conditions/move_to_bndry.py *.dat
-# python $HOME/wmmw/initial_conditions/spread.py *.dat
-
-{post_action:s}
-
-# move output file to current folder
-mv $HOME/$PBS_JOBNAME.o${{PBS_JOBID%.geryon2}} .
-
-# remove wnoise files
 rm wnoise*.bin
-
-# archive results
-rsync -avzh --update ../../music/* /data5/lbignone/hog/media/music/.
-rsync -avzh --update ../../regions/* /data5/lbignone/hog/media/regions/.
-
-# delete all output
-rm *.dat
-rm wnoise*
-rm *.txt
-rm *.o*

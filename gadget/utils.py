@@ -390,48 +390,48 @@ def save_makefile(gadget_run, systype="Geryon2_gnu", template='makefile.template
         f.write(content)
 
 
-def save_makefile(gadget_run, systype="Geryon2_gnu", template='Config.sh.template', systype_template='Makefile.systype.template'):
+# def save_makefile(gadget_run, systype="Geryon2_gnu", template='Config.sh.template', systype_template='Makefile.systype.template'):
 
-    path = gadget_run.get_path()
-    makedirs(path)
+#     path = gadget_run.get_path()
+#     makedirs(path)
 
-    template_path = os.path.join(module_dir, template)
-    systype_template_path = os.path.join(module_dir, systype_template)
+#     template_path = os.path.join(module_dir, template)
+#     systype_template_path = os.path.join(module_dir, systype_template)
 
-    with open(template_path, 'r') as f:
-        content = f.read()
+#     with open(template_path, 'r') as f:
+#         content = f.read()
 
-    values = {}
-    for option in new_makefile_options:
-        field = getattr(gadget_run, option)
+#     values = {}
+#     for option in new_makefile_options:
+#         field = getattr(gadget_run, option)
         
-        value = '#' + option
+#         value = '#' + option
         
-        if field is not None:
+#         if field is not None:
         
-            if type(field) != bool:
-                value += '=' + str(field)
-            if field:
-                value = value[1:]
+#             if type(field) != bool:
+#                 value += '=' + str(field)
+#             if field:
+#                 value = value[1:]
         
-        values[option] = value
+#         values[option] = value
    
-    content = content.format(**values)
+#     content = content.format(**values)
 
-    fname = gadget_run.get_makefile_path()
-    with open(fname, 'w') as f:
-        f.write(content)
+#     fname = gadget_run.get_makefile_path()
+#     with open(fname, 'w') as f:
+#         f.write(content)
 
-    # write systype
+#     # write systype
 
-    with open(systype_template_path, 'r') as f:
-        content = f.read()
+#     with open(systype_template_path, 'r') as f:
+#         content = f.read()
 
-    content = content.format(systype=systype)
+#     content = content.format(systype=systype)
 
-    fname = gadget_run.get_systype_path()
-    with open(fname, 'w') as f:
-        f.write(content)
+#     fname = gadget_run.get_systype_path()
+#     with open(fname, 'w') as f:
+#         f.write(content)
 
 
 def save_config(gadget_run, isGadget3=False):
