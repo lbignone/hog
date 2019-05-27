@@ -1,0 +1,26 @@
+name: hog
+channels:
+  - auto
+  - hargup
+  - conda-forge
+dependencies:
+  - python=3.6
+  - scipy
+  - pandas
+  - jupyter
+  - pytables
+  - tqdm
+  - matplotlib
+  - astropy
+  - h5py
+  - nbdime
+  - django=1.11.2
+  - django-mptt
+  - django-extensions
+  - pip
+  - pip:
+    - django-suit
+    - django-dbbackup
+    - django-picklefield
+    - django_polymorphic
+    - django-admin-easy
